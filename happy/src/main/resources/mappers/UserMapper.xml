@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.happy.day.resources.mappers.UserMapper">
+
+	<select id="selectUser"
+		parameterType="com.happy.day.dto.UserDto"
+		resultType="com.happy.day.dto.UserDto">
+		SELECT * FROM user WHERE USER_ID=#{userId}
+	</select>
+
+	<insert id="insertUser"
+		parameterType="com.happy.day.dto.UserDto">
+		INSERT INTO user (USER_ID, USER_PASSWORD, USER_NAME) VALUES (#{userId}, #{userPassword}, #{userName})
+	</insert>
+
+</mapper>

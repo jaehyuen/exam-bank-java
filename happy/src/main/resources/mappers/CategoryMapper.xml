@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.happy.day.resources.mappers.CategoryMapper">
+
+	<select id="selectCategoryDup"
+		parameterType="com.happy.day.dto.CategoryDto"
+		resultType="com.happy.day.dto.CategoryDto">
+		SELECT * FROM category WHERE (CATEGORY_FLAG=true AND
+		CATEGORY_NAME=#{categoryName}) OR (CATEGORY_FLAG=false AND
+		AUTHOR_SEQ=1 AND CATEGORY_NAME=#{categoryName});
+	</select>
+
+	<insert id="insertCategory"
+		parameterType="com.happy.day.dto.CategoryDto">
+		INSERT INTO category (CATEGORY_NAME, CATEGORY_FLAG,
+		AUTHOR_SEQ) VALUES (#{categoryName}, #{categoryFlag}, #{authorSeq})
+	</insert>
+
+</mapper>
+

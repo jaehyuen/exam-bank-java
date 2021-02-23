@@ -1,0 +1,12 @@
+.main-div-answer1 {
+  display: flex;
+  justify-content: space-around;
+}
+.main-div-answer3 {
+  background-color: #136572;
+  color: white;
+}
+.main-div-answer3:hover {
+  background-color: #063c53;
+  border: 3px solid #063c53;
+}

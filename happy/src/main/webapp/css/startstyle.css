@@ -1,0 +1,32 @@
+.body-div1 {
+  font-size: 12vh;
+  text-align: center;
+  color: white;
+  background-color: #519d9e;
+  padding: 17vh;
+  box-shadow: 2px 2px 2px gray;
+}
+.body-div2 > a:hover {
+  color: yellow;
+}
+.body-div2 {
+  font-size: 5vh;
+  background-color: #9dc8c8;
+  padding: 22vh;
+  color: white;
+  box-shadow: 2px 2px 2px gray;
+}
+.body-div2 > a {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+body {
+  margin: 0;
+}
+a {
+  text-decoration: none;
+}
+a:visited {
+  color: white;
+}

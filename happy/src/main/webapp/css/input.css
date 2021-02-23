@@ -1,0 +1,152 @@
+.input-div1,
+.input-div {
+  border: 7px solid #136572;
+  margin: 100px;
+  border-radius: 15px;
+  padding: 20px;
+  width: 480px;
+  background-color: white;
+}
+.input-div {
+  height: 300px;
+}
+.input-div1 {
+  height: 500px;
+}
+.input-div-flex {
+  display: flex;
+
+  justify-content: center;
+}
+.input-area,
+.input-area1,
+.input-textarea,
+.input-area2 {
+  font-size: 20px;
+  border-radius: 10px;
+  border: 3px solid #136572;
+  padding: 10px;
+  box-shadow: 1px 1px 2px gray;
+}
+.input-textarea {
+  height: 80px;
+  width: 444px;
+}
+.input-area {
+  margin-top: 30px;
+  width: 444px;
+  height: 40px;
+}
+.input-area2 {
+  width: 200px;
+  margin-right: 11px;
+}
+.input-area1 {
+  margin-bottom: 30px;
+  width: 444px;
+  height: 40px;
+}
+.input-button,
+.input-a {
+  width: 200px;
+
+  font-size: 20px;
+  border-radius: 10px;
+  background-color: #136572;
+  color: white;
+  outline: 0;
+  border: 0;
+  margin-top: 40px;
+  box-shadow: 1px 1px 2px gray;
+  text-align: center;
+}
+.input-button,
+.input-button1 {
+  height: 50px;
+  cursor: pointer;
+}
+.input-button1 {
+  width: 470px;
+  font-size: 20px;
+  border-radius: 10px;
+  background-color: #136572;
+  color: white;
+  outline: 0;
+  border: 0;
+  box-shadow: 1px 1px 2px gray;
+}
+.input-div-flex1 {
+  display: flex;
+  justify-content: space-between;
+}
+.input-a {
+  text-align: center;
+  color: white;
+  display: block;
+  padding-top: 10px;
+}
+.input-button:hover,
+.input-a:hover,
+.input-button1:hover {
+  background-color: #063c53;
+}
+.input-div-flex2 {
+  display: flex;
+
+  justify-content: space-around;
+}
+label {
+  font-size: 20px;
+}
+.body-div-main {
+  display: flex;
+  justify-content: center;
+}
+
+.input-a1:hover {
+  background-color: rgb(228, 17, 17);
+}
+.input-button2,
+.input-a2 {
+  width: 200px;
+
+  font-size: 20px;
+  border-radius: 10px;
+
+  color: white;
+
+  box-shadow: 1px 1px 2px gray;
+  text-align: center;
+  height: 50px;
+  cursor: pointer;
+}
+.input-button2 {
+  outline: 0;
+  background-color: #136572;
+  border: 0;
+}
+.input-a2 {
+  margin-top: 40px;
+  height: 40px;
+}
+.input-a1 {
+  width: 200px;
+
+  font-size: 20px;
+  border-radius: 10px;
+  background-color: rgb(235, 64, 64);
+  color: white;
+
+  box-shadow: 1px 1px 2px gray;
+
+  text-align: center;
+  color: white;
+  cursor: pointer;
+  padding-top: 10px;
+}
+.input-sym {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 10px;
+}
