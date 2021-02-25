@@ -1,4 +1,4 @@
-package com.happy.day.service;
+package com.happy.day.user.service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -6,9 +6,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.happy.day.dao.UserDao;
-import com.happy.day.dto.ResultDto;
-import com.happy.day.dto.UserDto;
+import com.happy.day.common.dto.ResultDto;
+import com.happy.day.user.dao.UserDao;
+import com.happy.day.user.dto.UserDto;
 import com.happy.day.util.Util;
 
 @Service

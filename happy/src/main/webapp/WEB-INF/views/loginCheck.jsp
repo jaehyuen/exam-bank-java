@@ -7,10 +7,6 @@ String userId = (String)session.getAttribute("userId");
 String userName = (String)session.getAttribute("userName"); 
 Integer userSeq = (Integer)session.getAttribute("userSeq"); 
 
-System.out.println("userId : "+userId);
-System.out.println("userName : "+userName);
-System.out.println("userSeq : "+userSeq);
-
 //public void loginCheck(){
 //	respone.sendRedirect("/user/login");
 //}

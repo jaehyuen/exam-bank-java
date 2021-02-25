@@ -1,14 +1,14 @@
-package com.happy.day.service;
+package com.happy.day.category.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.happy.day.dao.CategoryDao;
-import com.happy.day.dto.CategoryDto;
-import com.happy.day.dto.ResultDto;
-import com.happy.day.dto.UserDto;
+import com.happy.day.category.dao.CategoryDao;
+import com.happy.day.category.dto.CategoryDto;
+import com.happy.day.common.dto.ResultDto;
+import com.happy.day.user.dto.UserDto;
 import com.happy.day.util.Util;
 
 @Service

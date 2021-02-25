@@ -1,4 +1,4 @@
-package com.happy.day.controller;
+package com.happy.day.user.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.happy.day.dto.ResultDto;
-import com.happy.day.dto.UserDto;
-import com.happy.day.service.UserService;
+import com.happy.day.common.dto.ResultDto;
+import com.happy.day.user.dto.UserDto;
+import com.happy.day.user.service.UserService;
 
 /**
  * Handles requests for the application home page.

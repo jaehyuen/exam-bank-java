@@ -1,4 +1,4 @@
-package com.happy.day.controller;
+package com.happy.day.category.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.happy.day.dto.CategoryDto;
-import com.happy.day.dto.ResultDto;
-import com.happy.day.service.CategoryService;
+import com.happy.day.category.dto.CategoryDto;
+import com.happy.day.category.service.CategoryService;
+import com.happy.day.common.dto.ResultDto;
 
 /**
  * Handles requests for the application home page.
@@ -32,7 +32,7 @@ public class CategoryController {
 
 	@RequestMapping(value = "/category/create", method = RequestMethod.POST)
 	public @ResponseBody ResultDto createCategory(@ModelAttribute CategoryDto categoryDto) {
-		
+
 		logger.info("[createCategory post] categoryDto is : " + categoryDto);
 		return categoryService.createCategory(categoryDto);
 	}

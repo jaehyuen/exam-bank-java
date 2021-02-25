@@ -1,4 +1,4 @@
-package com.happy.day.dto;
+package com.happy.day.common.dto;
 
 import lombok.Data;
 

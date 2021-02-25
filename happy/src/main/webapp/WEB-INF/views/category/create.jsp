@@ -45,7 +45,7 @@ if (userId == null) {
 		}
 
 		console.log(data);
-		//		console.log(pramas);
+
 
 		$.ajax({
 			url : "create",

@@ -4,13 +4,13 @@
 <mapper namespace="com.happy.day.resources.mappers.UserMapper">
 
 	<select id="selectUser"
-		parameterType="com.happy.day.dto.UserDto"
-		resultType="com.happy.day.dto.UserDto">
+		parameterType="com.happy.day.user.dto.UserDto"
+		resultType="com.happy.day.user.dto.UserDto">
 		SELECT * FROM user WHERE USER_ID=#{userId}
 	</select>
 
 	<insert id="insertUser"
-		parameterType="com.happy.day.dto.UserDto">
+		parameterType="com.happy.day.user.dto.UserDto">
 		INSERT INTO user (USER_ID, USER_PASSWORD, USER_NAME) VALUES (#{userId}, #{userPassword}, #{userName})
 	</insert>
 

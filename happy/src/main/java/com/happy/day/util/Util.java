@@ -1,6 +1,6 @@
 package com.happy.day.util;
 
-import com.happy.day.dto.ResultDto;
+import com.happy.day.common.dto.ResultDto;
 
 public class Util {
 

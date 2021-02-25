@@ -24,13 +24,13 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String homePage() {
-		
+		logger.debug("[homePage] start / get");
 		return "home";
 	}
 	
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String mainPage() {
-		
+		logger.debug("[mainPage] start /main get");
 		return "main";
 	}
 	

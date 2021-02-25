@@ -1,4 +1,4 @@
-package com.happy.day.dto;
+package com.happy.day.category.dto;
 
 import lombok.Data;
 
