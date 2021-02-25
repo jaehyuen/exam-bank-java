@@ -9,4 +9,5 @@ public class CategoryDto {
 	private String categoryName;
 	private boolean categoryFlag;
 	private int authorSeq;
+	private int currenPage;
 }

@@ -15,8 +15,8 @@ public class CategoryDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
-	public List<CategoryDto> selectCategory(CategoryDto categoryDto) {
-		return sqlSession.selectList("selectCategory", categoryDto);
+	public List<CategoryDto> selectCategoryList(CategoryDto categoryDto) {
+		return sqlSession.selectList("selectCategoryList", categoryDto);
 	}
 	
 	public CategoryDto selectCategoryDup(CategoryDto categoryDto) {

@@ -14,8 +14,6 @@
 
 <script>
 	function login() {
-/* 		var userId = $('#userId').val(); */
-/* 		var userPassword = $('#userPassword').val(); */
 		
 		var data = {
 				"userId" : $('#userId').val(),

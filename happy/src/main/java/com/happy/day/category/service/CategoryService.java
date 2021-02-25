@@ -22,7 +22,7 @@ public class CategoryService {
 	public ResultDto createCategory(CategoryDto categoryDto) {
 
 		CategoryDto category = categoryDao.selectCategoryDup(categoryDto);
-		System.out.println(category);
+
 
 		if (category == null) {
 
@@ -35,4 +35,42 @@ public class CategoryService {
 
 	}
 
+	public ResultDto getCategoryList(CategoryDto categoryDto) {
+
+		List<CategoryDto> catgoryList=null;
+		
+		try {
+			
+			catgoryList = categoryDao.selectCategoryList(categoryDto);
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			
+			return util.setResult("9999", false, "카테고리 조회 실패", "");
+		}
+		
+		return util.setResult("0000", true, "카테고리 조회 성공", catgoryList);
+
+	}
+	
+	public ResultDto getPages(CategoryDto categoryDto) {
+
+		List<CategoryDto> catgoryList=null;
+		
+		try {
+			
+			catgoryList = categoryDao.selectCategoryList(categoryDto);
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			
+			return util.setResult("9999", false, "페이 조회 실패", "");
+		}
+		
+		return util.setResult("0000", true, "페이지 조회 성공", catgoryList.size()/7);
+
+	}
+	
 }

@@ -11,9 +11,112 @@
 <link rel="stylesheet" type="text/css" href="/css/input.css">
 <link rel="stylesheet" type="text/css"
 	href="/css/fontawesome-free-5.0.13/web-fonts-with-css/css/fontawesome-all.css">
-<script type="text/javascript"
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<!-- <script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> -->
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="/css/slide.js"></script>
+
+<script>
+    getCategoryList()
+
+    var categoryId = location.pathname.replace("/main", "").replace("/", "");
+    console.log(categoryId)
+
+    if (categoryId != "") {
+
+        getQuestionList(categoryId)
+
+    }
+
+    function getCategoryList() {
+        var authorSeq = ${userSeq}
+        var currenPage= ${currenPage}
+
+        var data = {
+            "authorSeq": authorSeq,
+            "currenPage": currenPage
+            
+        }
+
+    
+        $.ajax({
+            url: "/category/list",
+            type: "GET",
+            dataType: 'json',
+            data: data,
+            success: function (result) {
+
+                console.log(result)
+                console.log(result.resultData)
+                $.each(result.resultData, function (i, category) {
+                    console.log(category.categoryName)
+                    
+                    var str = ""
+                    
+                    str += "<div class='main-div-cate'>"
+                    str += "<a href='/main/" + category.categorySeq+"'"
+                    str += "class='body-div-main-div1-a'>" + category.categoryName + "</a>"
+                    str += "</div>"
+                    $("#main-div1").append(str)
+                });
+
+
+            },
+            error: function (xhr, resp, text) {
+                console.log(xhr, resp, text);
+            }
+        })
+    }
+
+    function getQuestionList(categoryId) {
+
+        var data = {
+            "categoryId": categoryId
+        }
+
+        $.ajax({
+            url: "/question/list",
+            type: "POST",
+            dataType: 'json',
+            data: data,
+            success: function (result) {
+
+
+            },
+            error: function (xhr, resp, text) {
+                console.log(xhr, resp, text);
+            }
+        })
+
+    }
+    
+    function getPages() {
+
+        var authorSeq = ${userSeq}
+        console.log(authorSeq);
+
+        var data = {
+            "authorSeq": authorSeq
+        }
+
+
+        $.ajax({
+            url: "/category/pages",
+            type: "GET",
+            dataType: 'json',
+            data: data,
+            success: function (result) {
+
+
+            },
+            error: function (xhr, resp, text) {
+                console.log(xhr, resp, text);
+            }
+        })
+
+    }
+</script>
+
 </head>
 <body>
 	<div class="body-div">
@@ -44,12 +147,10 @@
 			</div>
 		</nav>
 		<main>
-			<div class="main-div1">
-				<div class="main-div-cate">
-					<a href="/main/602b510e496ec405182e639b"
-						class="body-div-main-div1-a">블록체인</a>
-				</div>
+			<div class="main-div1" id="main-div1">
+
 				<div class="main-div-cate1">
+					<a href="/main?page=1" class="main-a-page">1</a>
 					<a href="/main?page=1" class="main-a-page">1</a>
 				</div>
 			</div>

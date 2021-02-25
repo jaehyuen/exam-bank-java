@@ -63,8 +63,10 @@ public class UserService {
 	
 	public void logout(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		
-		session.invalidate();
+
+		session.removeAttribute("userId");
+		session.removeAttribute("userName");
+		session.removeAttribute("userSeq");
 		
 	}
 }
