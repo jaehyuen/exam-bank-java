@@ -18,13 +18,15 @@
 		var joinBtn = document.getElementById("joinButton")
 		var dupBtn = document.getElementById("dupButton")
 
-		if (userId.value == "") {
+		if ($('#userId').val() == "") {
 			alert("아이디가 빈칸입니다")
 			return
 
+			
+
 		}
 		var data = {
-			"userId" : userId.value
+			"userId" : $('#userId').val()
 		}
 
 		console.log(data);
@@ -40,13 +42,14 @@
 
 				if (result.resultFlag) {
 
-					userId.readOnly = true
-					joinBtn.hidden = false
-					dupBtn.hidden = true
+					$('#userId').prop('readonly', true);
+
+					$('#joinButton').show()
+					$('#dupButton').hide()
 
 				} else {
 
-					userId.value = ""
+					$('#userId').val('')
 
 				}
 			},
@@ -58,22 +61,12 @@
 	}
 
 	function join() {
-		/*	
-		    var form = $("#loginForm");
-		    var pramas = $(form).serializeObject();
-		 */
-		var userId = document.getElementById("userId")
-		var userPassword = document.getElementById("userPassword")
-		var userName = document.getElementById("userName")
 
 		var data = {
-			"userId" : userId.value,
-			"userPassword" : userPassword.value,
-			"userName" : userName.value
+			"userId" : $('#userId').val(),
+			"userPassword" : $('#userPassword').val(),
+			"userName" : $('#userName').val()
 		}
-
-		console.log(data);
-		//		console.log(pramas);
 
 		$.ajax({
 			url : "join",

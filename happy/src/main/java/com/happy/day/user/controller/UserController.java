@@ -28,54 +28,56 @@ public class UserController {
 
 	@RequestMapping(value = "/user/login", method = RequestMethod.GET)
 	public String loginPage() {
-
+		
+		logger.debug("[loginPage] start /user/login get");
+		
 		return "user/login";
 	}
 
 	@RequestMapping(value = "/user/join", method = RequestMethod.GET)
 	public String joinPage() {
-
+		
+		logger.debug("[joinPage] start /user/join get");
+		
 		return "user/join";
 	}
 
-//	@RequestMapping(value = "/user/login", method = RequestMethod.POST)
-//	public String login(@ModelAttribute UserDto userDto, HttpServletRequest request ) {
-//		logger.info("[login post] userDto is : " + userDto);
-//		
-//		if(userService.loginUser(userDto, request)) {
-//			return "main";
-//		}
-//		
-//		return "user/login";
-//	}
+	@RequestMapping(value = "/user/logout", method = RequestMethod.GET)
+	public String logout(HttpServletRequest request) {
+
+		logger.debug("[logout] start /user/logout get"); 
+		
+		userService.logout(request);
+		
+		return "main";
+	}
+
 	@RequestMapping(value = "/user/login", method = RequestMethod.POST)
 	public @ResponseBody ResultDto login(@ModelAttribute UserDto userDto, HttpServletRequest request) {
-		logger.info("[login post] userDto is : " + userDto);
+		
+		logger.debug("[login] start /user/login post");
+		logger.debug("[login] userDto is : " + userDto);
 
 		return userService.loginUser(userDto, request);
 	}
 
-//	@RequestMapping(value = "/user/join", method = RequestMethod.POST)
-//	public String join(@ModelAttribute UserDto userDto) {
-//		logger.info("[join post] userDto is : " + userDto);
-//		userService.joinUser(userDto);
-//
-//		return "user/login";
-//	}
-
 	@RequestMapping(value = "/user/join", method = RequestMethod.POST)
 	public @ResponseBody ResultDto join(@ModelAttribute UserDto userDto) {
-		logger.info("[join post] userDto is : " + userDto);
+		
+		logger.debug("[join] start /user/join post");
+		logger.debug("[join] userDto is : " + userDto);
 
 		return userService.joinUser(userDto);
 	}
 
 	@RequestMapping(value = "/user/check", method = RequestMethod.POST)
-
 	public @ResponseBody ResultDto duplicateCheck(@ModelAttribute UserDto userDto) {
-		logger.info("[duplicateCheck] userDto is : " + userDto);
+		
+		logger.debug("[duplicateCheck] start /user/check post");
+		logger.debug("[duplicateCheck] userDto is : " + userDto);
 
 		return userService.duplicateCheck(userDto);
 	}
 
 }
+

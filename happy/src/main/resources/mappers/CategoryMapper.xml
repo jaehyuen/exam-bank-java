@@ -9,7 +9,7 @@
 		resultType="com.happy.day.category.dto.CategoryDto">
 		SELECT * FROM category WHERE (CATEGORY_FLAG=true AND
 		CATEGORY_NAME=#{categoryName}) OR (CATEGORY_FLAG=false AND
-		AUTHOR_SEQ=1 AND CATEGORY_NAME=#{categoryName});
+		AUTHOR_SEQ=#{authorSeq} AND CATEGORY_NAME=#{categoryName})
 	</select>
 
 	<insert id="insertCategory"

@@ -32,33 +32,12 @@ public class UserService {
 
 	}
 
-//	public void joinUser(UserDto userDto) {
-//		userDao.insertUser(userDto);
-//	}
 	public ResultDto joinUser(UserDto userDto) {
 		userDao.insertUser(userDto);
 		return util.setResult("0000", true, "가입 성공", "");
 	}
 
-//	public boolean loginUser(UserDto userDto, HttpServletRequest request) {
-//
-//		HttpSession session = request.getSession();
-//
-//		UserDto user = userDao.selectUser(userDto);
-//
-//		if (user != null || user.getUserPassword().equals(userDto.getUserPassword())) {
-//
-//			session.setAttribute("userId", user.getUserId());
-//			session.setAttribute("userName", user.getUserName());
-//
-//			return true;
-//
-//		} else {
-//
-//			return false;
-//
-//		}
-//	}
+
 
 	public ResultDto loginUser(UserDto userDto, HttpServletRequest request) {
 
@@ -80,5 +59,12 @@ public class UserService {
 
 		return util.setResult("9999", false, "로그인 실패", "");
 
+	}
+	
+	public void logout(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		
+		session.invalidate();
+		
 	}
 }

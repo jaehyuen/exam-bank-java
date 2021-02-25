@@ -14,13 +14,14 @@
 
 <script>
 	function login() {
-		var userId = document.getElementById("userId")
-		var userPassword = document.getElementById("userPassword")
-
+/* 		var userId = $('#userId').val(); */
+/* 		var userPassword = $('#userPassword').val(); */
+		
 		var data = {
-			"userId" : userId.value,
-			"userPassword" : userPassword.value,
-		}
+				"userId" : $('#userId').val(),
+				"userPassword" : $('#userPassword').val(),
+			}
+		
 
 		$.ajax({
 			url : "login",
@@ -37,6 +38,8 @@
 				} else {
 
 					alert("아이디 또는 패스워드를 확인해주세요")
+					$('#userId').val('')
+				 	$('#userPassword').val('')
 
 				}
 
