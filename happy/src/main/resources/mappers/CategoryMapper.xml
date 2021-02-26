@@ -16,14 +16,14 @@
 		parameterType="com.happy.day.category.dto.CategoryDto"
 		resultType="com.happy.day.category.dto.CategoryDto">
 		SELECT * FROM category WHERE CATEGORY_FLAG=true OR
-		(CATEGORY_FLAG=false AND AUTHOR_SEQ=#{authorSeq})
+		(CATEGORY_FLAG=false AND AUTHOR_SEQ=#{authorSeq}) 
 	</select>
 	
 		<select id="selectCategoryListByPage"
 		parameterType="com.happy.day.category.dto.CategoryDto"
 		resultType="com.happy.day.category.dto.CategoryDto">
 		SELECT * FROM category WHERE CATEGORY_FLAG=true OR
-		(CATEGORY_FLAG=false AND AUTHOR_SEQ=#{authorSeq})
+		(CATEGORY_FLAG=false AND AUTHOR_SEQ=#{authorSeq}) LIMIT #{page},7
 	</select>
 
 

@@ -6,7 +6,13 @@
 String userId = (String)session.getAttribute("userId"); 
 String userName = (String)session.getAttribute("userName"); 
 Integer userSeq = (Integer)session.getAttribute("userSeq"); 
-Integer currentPage = (Integer)session.getAttribute("page"); 
+Integer currentPage = (Integer)session.getAttribute("currentPage");
+Integer pageNum = (Integer)session.getAttribute("pageNum");
+
+if(userSeq == null){
+	userSeq=0;
+}
+
 
 %>
 

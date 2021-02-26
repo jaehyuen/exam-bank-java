@@ -49,7 +49,7 @@ public class UserController {
 		
 		userService.logout(request);
 		
-		return "main";
+		return "redirect:/main";
 	}
 
 	@RequestMapping(value = "/user/login", method = RequestMethod.POST)
