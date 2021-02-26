@@ -34,7 +34,7 @@
 
         var data = {
             "authorSeq": authorSeq,
-            "currenPage": currenPage
+            "currentPage": currentPage
             
         }
 
