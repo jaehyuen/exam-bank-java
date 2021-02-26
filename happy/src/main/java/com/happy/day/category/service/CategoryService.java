@@ -35,7 +35,7 @@ public class CategoryService {
 
 	}
 
-	public ResultDto getCategoryList(CategoryDto categoryDto) {
+	public ResultDto getCategoryListByPage(CategoryDto categoryDto) {
 
 		List<CategoryDto> catgoryList=null;
 		
@@ -44,6 +44,27 @@ public class CategoryService {
 			categoryDto.setPage((categoryDto.getPage() - 1) * 7);
 			
 			catgoryList = categoryDao.selectCategoryListByPage(categoryDto);
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			
+			return util.setResult("9999", false, "카테고리 조회 실패", "");
+		}
+		
+		return util.setResult("0000", true, "카테고리 조회 성공", catgoryList);
+
+	}
+	
+	public ResultDto getCategoryListAll(CategoryDto categoryDto) {
+
+		List<CategoryDto> catgoryList=null;
+		
+		try {
+			
+			
+			
+			catgoryList = categoryDao.selectCategoryList(categoryDto);
 			
 		} catch (Exception e) {
 			

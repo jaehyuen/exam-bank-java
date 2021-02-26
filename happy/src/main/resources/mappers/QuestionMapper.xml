@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.happy.day.resources.mappers.QuestionMapper">
+
+	<select id="selectQuestionList"
+		parameterType="questionDto"
+		resultType="questionDto">
+		SELECT * FROM question WHERE CATEGORY_SEQ=#{categorySeq}
+	</select>
+
+<!-- 	<insert id="insertUser"
+		parameterType="com.happy.day.question.dto.UserDto">
+		INSERT INTO user (USER_ID, USER_PASSWORD, USER_NAME) VALUES (#{userId}, #{userPassword}, #{userName})
+	</insert> -->
+
+</mapper>

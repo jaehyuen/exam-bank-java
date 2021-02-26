@@ -67,6 +67,7 @@ main {
   color: white;
   border-radius: 10px;
   box-shadow: 1px 1px 2px gray;
+  flex-direction: column;
 }
 .exam-start-div:hover {
   background-color: rgb(228, 17, 17);

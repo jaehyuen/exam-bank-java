@@ -18,23 +18,59 @@
     <script type="text/javascript" src="/css/slide.js"></script>
 
     <script>
-        getCategoryList()
+        $(function () {
 
-        var categoryId = location.pathname.replace("/main", "").replace("/", "");
-        console.log(categoryId)
+            var userSeq = '${userSeq}'
+            var currentPage = '${currentPage}'
 
-        if (categoryId != "") {
+            getCategoryList(userSeq, currentPage)
 
-            getQuestionList(categoryId)
+            var categorySeq = location.pathname.replace("/main", "").replace("/", "");
+
+
+            if (categorySeq != "") {
+
+                getQuestionList(categorySeq)
+
+                addQuestionDiv(userSeq, categorySeq)
+
+            }
+        });
+
+
+        function addQuestionDiv(userSeq, categorySeq) {
+
+            var str = ""
+
+            str += "<div class='exam-start-div'>"
+            if (userSeq == 0) {
+                str += "<a href='/user/login' class='exam-start'>start</a>"
+            } else {
+                str += "<a href='/question/start/" + categorySeq + "' class='exam-start'>start</a>"
+            }
+
+            str += "</div>"
+            str += "<div class='tool-exam1-div1'>"
+            if (userSeq == 0) {
+                str += "<a href='/user/login' class='tool-exam1'>문제만들기</a>"
+            } else {
+                str += "<a href='/question/create/" + categorySeq + "' class='tool-exam1'>문제만들기</a>"
+            }
+
+            str += "</div>"
+
+
+            console.log(str)
+            console.log($("#tool-exam").text())
+            console.log($("#main-div1").text())
+            $("#tool-exam").html(str)
+
 
         }
 
-        function getCategoryList() {
+        function getCategoryList(authorSeq, currentPage) {
 
-            var authorSeq = '${userSeq}'
-            var currentPage = '${currentPage}'
 
-            console.log(authorSeq)
             var data = {
                 "authorSeq": authorSeq == "" ? 0 : authorSeq,
                 "page": currentPage == "" ? 1 : currentPage,
@@ -43,7 +79,7 @@
 
 
             $.ajax({
-                url: "/category/list",
+                url: "/category/listPage",
                 type: "GET",
                 dataType: 'json',
                 data: data,
@@ -67,6 +103,7 @@
                         str += "</div>"
                         $("#main-div1").prepend(str)
 
+
                     });
 
 
@@ -77,10 +114,10 @@
             })
         }
 
-        function getQuestionList(categoryId) {
+        function getQuestionList(categorySeq) {
 
             var data = {
-                "categoryId": categoryId
+                "categorySeq": categorySeq
             }
 
             $.ajax({
@@ -141,7 +178,8 @@
                 </div>
             </div>
             <div class="main-div2">
-                <div class="tool-exam">
+                <div class="tool-exam" id="tool-exam">
+
                     <div class="main-div-answer3">
                         <%
 				   		if (userId != null || userName != null) {		
@@ -150,7 +188,7 @@
                         <%
 						} else {
 						%>
-						<a href="/user/login" class="tool-exam1">카테고리만들기</a>
+                        <a href="/user/login" class="tool-exam1">카테고리만들기</a>
                         <%
 						}
 						%>

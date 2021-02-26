@@ -33,22 +33,26 @@ public class CategoryController {
 		return "category/create";
 	}
 	
-	@RequestMapping(value = "/category/list", method = RequestMethod.GET)
-	public @ResponseBody ResultDto getCategoryList(CategoryDto categoryDto) {
+	@RequestMapping(value = "/category/listPage", method = RequestMethod.GET)
+	public @ResponseBody ResultDto getCategoryListByPage(CategoryDto categoryDto ) {
 		
 		
-		logger.debug("[getCategoryList] start /category/list get");
+		logger.debug("[getCategoryList] start /category/listPage get");
+		logger.debug("[getCategoryList] categoryDto is : " + categoryDto);
 		
-		return categoryService.getCategoryList(categoryDto);
+		return categoryService.getCategoryListByPage(categoryDto);
 	}
 	
-	@RequestMapping(value = "/category/pages", method = RequestMethod.GET)
-	public @ResponseBody ResultDto getPages(CategoryDto categoryDto) {
-
-		logger.debug("[getCategoryList] start /category/pages get");
+	@RequestMapping(value = "/category/listAll", method = RequestMethod.GET)
+	public @ResponseBody ResultDto getCategoryListAll(CategoryDto categoryDto ) {
 		
-		return categoryService.getPages(categoryDto);
+		
+		logger.debug("[getCategoryList] start /category/listAll get");
+		logger.debug("[getCategoryList] categoryDto is : " + categoryDto);
+		
+		return categoryService.getCategoryListAll(categoryDto);
 	}
+	
 
 
 	@RequestMapping(value = "/category/create", method = RequestMethod.POST)

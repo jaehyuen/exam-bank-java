@@ -36,7 +36,7 @@ if (userId == null) {
 
 		var categoryName = document.getElementById("categoryName")
 
-		var userSeq = ${userSeq}
+		var userSeq = '${userSeq}'
 
 		var data = {
 			"categoryName" : categoryName.value,

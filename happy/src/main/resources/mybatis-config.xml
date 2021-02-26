@@ -5,5 +5,12 @@
 		<!-- 자동으로 카멜케이스 규칙으로 변환 -->
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
 	</settings>
+	
+
+	<typeAliases>
+		<typeAlias type="com.happy.day.user.dto.UserDto" alias="userDto"/>
+		<typeAlias type="com.happy.day.question.dto.QuestionDto" alias="questionDto"/>
+		<typeAlias type="com.happy.day.category.dto.CategoryDto" alias="categoryDto"/>
+	</typeAliases>
 
 </configuration>
