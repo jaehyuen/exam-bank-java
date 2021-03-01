@@ -21,18 +21,7 @@ if (userId == null) {
 <script>
 	function createCategory() {
 
-		var categoryFlagRadio = document.getElementsByName('categoryFlag');
-
-		var categoryFlag = null
-		for (var i = 0; i < categoryFlagRadio.length; i++) {
-				console.log(categoryFlagRadio[i].value)
-			if (categoryFlagRadio[i].checked == true) {
-
-				categoryFlag = categoryFlagRadio[i].value;
-
-			}
-
-		}
+		var categoryFlag = $(':radio[name="categoryFlag"]:checked').val();
 
 		var categoryName = document.getElementById("categoryName")
 
