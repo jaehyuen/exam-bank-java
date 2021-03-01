@@ -45,8 +45,9 @@ public class QuestionController {
 	public @ResponseBody ResultDto getQuestionList(QuestionDto questionDto) {
 
 		logger.debug("[getQuestionList] start /question/list POST");
+		logger.debug("[getQuestionList] test zz");
 		logger.debug("[getQuestionList] questionDto is : " + questionDto);
-
+			
 		return questionService.getQuestionList(questionDto);
 	}
 
