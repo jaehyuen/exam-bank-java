@@ -15,6 +15,11 @@ public class CategoryDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
+
+	public CategoryDto selectCategory(CategoryDto categoryDto) {
+		return sqlSession.selectOne("selectCategory", categoryDto);
+	}
+	
 	public List<CategoryDto> selectCategoryListByPage(CategoryDto categoryDto) {
 		return sqlSession.selectList("selectCategoryListByPage", categoryDto);
 	}

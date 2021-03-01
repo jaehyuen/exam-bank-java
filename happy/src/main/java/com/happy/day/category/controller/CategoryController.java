@@ -52,7 +52,17 @@ public class CategoryController {
 		
 		return categoryService.getCategoryListAll(categoryDto);
 	}
+
 	
+	@RequestMapping(value = "/category/info", method = RequestMethod.GET)
+	public @ResponseBody ResultDto getCategory(CategoryDto categoryDto ) {
+		
+		
+		logger.debug("[getCategory] start /category/info get");
+		logger.debug("[getCategory] categoryDto is : " + categoryDto);
+		
+		return categoryService.getCategory(categoryDto);
+	}
 
 
 	@RequestMapping(value = "/category/create", method = RequestMethod.POST)
