@@ -27,18 +27,26 @@ public class QuestionController {
 	private static final Logger logger = LoggerFactory.getLogger(QuestionController.class);
 
 	@RequestMapping(value = "/question/create/{id}", method = RequestMethod.GET)
-	public String creatQuestionPage() {
+	public String createQuestionPage() {
 
 		logger.debug("[creatQuestionPage] start /question/create/{id} get");
 
-		return "question/create";
+		return "question/createQuestion";
+	}
+	
+	@RequestMapping(value = "/question/{id}", method = RequestMethod.GET)
+	public String questionPage() {
+
+		logger.debug("[questionPage] start /question/{id} get");
+
+		return "question/detail";
 	}
 
 	@RequestMapping(value = "/question/create", method = RequestMethod.POST)
 	public @ResponseBody ResultDto creatQuestion(@RequestBody CreateQuestionDto createQuestionDto) {
 
-		logger.info("[creatQuestion] start /question/create post");
-		logger.info("[getQuestionList] createQuestionDto is : " + createQuestionDto);
+		logger.debug("[creatQuestion] start /question/create post");
+		logger.debug("[creatQuestion] createQuestionDto is : " + createQuestionDto);
 
 		return questionService.createQuestion(createQuestionDto);
 	}
@@ -46,8 +54,8 @@ public class QuestionController {
 	@RequestMapping(value = "/question/list", method = RequestMethod.POST)
 	public @ResponseBody ResultDto getQuestionList(QuestionDto questionDto) {
 
-		logger.info("[getQuestionList] start /question/list POST");
-		logger.info("[getQuestionList] questionDto is : " + questionDto);
+		logger.debug("[getQuestionList] start /question/list POST");
+		logger.debug("[getQuestionList] questionDto is : " + questionDto);
 			
 		return questionService.getQuestionList(questionDto);
 	}

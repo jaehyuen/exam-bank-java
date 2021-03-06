@@ -11,6 +11,7 @@ import com.happy.day.question.dao.QuestionDao;
 import com.happy.day.question.dto.CreateQuestionDto;
 import com.happy.day.question.dto.ExampleDto;
 import com.happy.day.question.dto.QuestionDto;
+import com.happy.day.question.dto.QuestionListDto;
 import com.happy.day.util.Util;
 
 @Service
@@ -18,7 +19,7 @@ public class QuestionService {
 
 	@Autowired
 	QuestionDao questionDao;
-	
+
 	@Autowired
 	ExampleDao exampleDao;
 
@@ -26,7 +27,7 @@ public class QuestionService {
 
 	public ResultDto getQuestionList(QuestionDto questionDto) {
 
-		List<QuestionDto> questionList = null;
+		List<QuestionListDto> questionList = null;
 		try {
 
 			questionList = questionDao.getQuestionList(questionDto);
@@ -42,13 +43,16 @@ public class QuestionService {
 
 	}
 
-	
 	public ResultDto createQuestion(CreateQuestionDto createQuestionDto) {
 
 		try {
-
-			//questionList = questionDao.getQuestionList(questionDto);
+			
 			int questionSeq = questionDao.insertQuestion(createQuestionDto.getQuestion());
+
+			for (ExampleDto exampleDto : createQuestionDto.getExampleList()) {
+				exampleDto.setQuestionSeq(questionSeq);
+				exampleDao.insertExample(exampleDto);
+			}
 
 		} catch (Exception e) {
 

@@ -30,7 +30,7 @@ public class CategoryController {
 
 		logger.debug("[createPage] start /category/create get");
 		
-		return "category/create";
+		return "category/createCategory";
 	}
 	
 	@RequestMapping(value = "/category/listPage", method = RequestMethod.GET)

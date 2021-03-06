@@ -179,7 +179,7 @@
 		<main class="body-div-main">
 		<div class="input-div-flex">
 			<div class="input-div1">
-				<form onsubmit="createQuestion()">
+				<form onsubmit="createQuestion(); return false;">
 					<p>
 					<div>카테고리</div>
 

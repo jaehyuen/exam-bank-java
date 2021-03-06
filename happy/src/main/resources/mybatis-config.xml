@@ -9,7 +9,9 @@
 
 	<typeAliases>
 		<typeAlias type="com.happy.day.user.dto.UserDto" alias="userDto"/>
+		<typeAlias type="com.happy.day.question.dto.ExampleDto" alias="exampleDto"/>
 		<typeAlias type="com.happy.day.question.dto.QuestionDto" alias="questionDto"/>
+		<typeAlias type="com.happy.day.question.dto.QuestionListDto" alias="questionListDto"/>
 		<typeAlias type="com.happy.day.category.dto.CategoryDto" alias="categoryDto"/>
 	</typeAliases>
 

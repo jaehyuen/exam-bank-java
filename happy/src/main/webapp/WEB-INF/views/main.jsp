@@ -113,11 +113,11 @@
                     var str = ""
 
                     str += "<div class='input-div-flex'>"
-                    str += "<a href='/post/exam/'+tes._id class='main-exam'>"
+                    str += "<a href='/question/"+question.questionSeq+"' class='main-exam'>"
                     str += "<div class='main-exam-div1'>" + question.questionTitle
                     str += "</div>"
                     str += "<div class='main-exam-div2'>"
-                    str += "<div>by " + question.authorSeq
+                    str += "<div>by " + question.authorName
                     str += "</div>"
                     str += "</div>"
                     str += "<a class='input-sym' href='/user/err'>"

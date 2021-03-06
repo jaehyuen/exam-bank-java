@@ -4,8 +4,16 @@
 <mapper namespace="com.happy.day.resources.mappers.QuestionMapper">
 
 	<select id="selectQuestionList" parameterType="questionDto"
-		resultType="questionDto">
-		SELECT * FROM question WHERE CATEGORY_SEQ=#{categorySeq}
+		resultType="questionListDto">
+		select 
+			a.QUESTION_SEQ,
+			a.QUESTION_TITLE, 
+			b.USER_NAME 
+		AS AUTHOR_NAME from question AS a
+		JOIN 
+		user AS b 
+			ON a.AUTHOR_SEQ=b.USER_SEQ 
+				AND a.CATEGORY_SEQ=#{categorySeq};
 	</select>
 
 	<insert id="insertQuestion" parameterType="questionDto"

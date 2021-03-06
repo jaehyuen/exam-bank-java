@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.happy.day.question.dto.ExampleDto;
 import com.happy.day.question.dto.QuestionDto;
+import com.happy.day.question.dto.QuestionListDto;
 
 @Repository
 public class QuestionDao {
@@ -15,7 +16,7 @@ public class QuestionDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
-	public List<QuestionDto> getQuestionList(QuestionDto questionDto) {
+	public List<QuestionListDto> getQuestionList(QuestionDto questionDto) {
 		return sqlSession.selectList("selectQuestionList", questionDto);
 	}
 
