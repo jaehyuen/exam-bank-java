@@ -3,15 +3,28 @@
 
 <mapper namespace="com.happy.day.resources.mappers.QuestionMapper">
 
-	<select id="selectQuestionList"
-		parameterType="questionDto"
+	<select id="selectQuestionList" parameterType="questionDto"
 		resultType="questionDto">
 		SELECT * FROM question WHERE CATEGORY_SEQ=#{categorySeq}
 	</select>
 
-<!-- 	<insert id="insertUser"
-		parameterType="com.happy.day.question.dto.UserDto">
-		INSERT INTO user (USER_ID, USER_PASSWORD, USER_NAME) VALUES (#{userId}, #{userPassword}, #{userName})
-	</insert> -->
+	<insert id="insertQuestion" parameterType="questionDto"
+		useGeneratedKeys="true" keyProperty="questionSeq">
+		INSERT INTO question
+		(
+		QUESTION_TITLE,
+		QUESTION_TYPE,
+		QUESTION_ANSWER,
+		AUTHOR_SEQ,
+		CATEGORY_SEQ
+		) VALUES
+		(
+		#{questionTitle},
+		#{questionType},
+		#{questionAnswer},
+		#{authorSeq},
+		#{categorySeq}
+		)
+	</insert>
 
 </mapper>

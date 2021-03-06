@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.happy.day.common.dto.ResultDto;
+import com.happy.day.question.dao.ExampleDao;
 import com.happy.day.question.dao.QuestionDao;
 import com.happy.day.question.dto.CreateQuestionDto;
+import com.happy.day.question.dto.ExampleDto;
 import com.happy.day.question.dto.QuestionDto;
 import com.happy.day.util.Util;
 
@@ -16,6 +18,9 @@ public class QuestionService {
 
 	@Autowired
 	QuestionDao questionDao;
+	
+	@Autowired
+	ExampleDao exampleDao;
 
 	Util util = new Util();
 
@@ -43,6 +48,7 @@ public class QuestionService {
 		try {
 
 			//questionList = questionDao.getQuestionList(questionDto);
+			int questionSeq = questionDao.insertQuestion(createQuestionDto.getQuestion());
 
 		} catch (Exception e) {
 

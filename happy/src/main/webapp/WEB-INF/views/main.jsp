@@ -60,9 +60,7 @@
             str += "</div>"
 
 
-            console.log(str)
-            console.log($("#tool-exam").text())
-            console.log($("#main-div1").text())
+     
             $("#tool-exam").html(str)
 
 
@@ -85,10 +83,9 @@
                 data: data,
                 success: function (result) {
 
-                    console.log(result)
+  
                     console.log(result.resultData)
                     $.each(result.resultData.reverse(), function (i, category) {
-                        console.log(category.categoryName)
 
                         var str = ""
 
@@ -101,8 +98,8 @@
                         }
 
                         str += "</div>"
+                        //	$("#main-div2").append(str)
                         $("#main-div1").prepend(str)
-
 
                     });
 
@@ -127,7 +124,38 @@
                 data: data,
                 success: function (result) {
 
+                	  console.log(result.resultData)
+                	  
+					 $.each(result.resultData, function (i, category) {
+						 var str = ""
 
+		                        str += "<div class='input-div-flex'>"
+		                       // str += "<a href='/post/exam/'+tes._id>"
+		                     
+		                 
+		                       // str += "</a>"
+		                        str += "</div>"
+		                        
+		                        //    div.input-div-flex
+		                        //    a.main-exam(href='/post/exam/'+tes._id)
+		                        //      div.main-exam-div1= tes.title+'['+tes.recommend.length+']'
+		                        //      
+		                        //      div.main-exam-div2                       
+		                        //          div= 'by'+tes.author
+		                        //    if displayname=='login'      
+		                        //      a.input-sym(href='/user/err')    
+		                        //        i(class='far fa-heart')
+		                        //    else
+		                        //      a.input-sym(href='/post/recommend/'+tes._id)    
+		                        //       i(class='far fa-heart')
+		                     
+		$("#main-div2").append(str)
+                    });
+                      console.log(str)
+                	  
+                	  
+
+                	  
                 },
                 error: function (xhr, resp, text) {
                     console.log(xhr, resp, text);
@@ -177,7 +205,7 @@
                     </c:forEach>
                 </div>
             </div>
-            <div class="main-div2">
+            <div class="main-div2" id="main-div2">
                 <div class="tool-exam" id="tool-exam">
 
                     <div class="main-div-answer3">

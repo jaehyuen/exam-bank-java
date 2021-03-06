@@ -20,15 +20,7 @@
 <script type='text/javascript' src='/css/slide.js'></script>
 
 <script>
-	//데이터 전송, 페이지 전환 방지
-	function handleSubmit(event) {
-		event.preventDefault()
-	}
 
-	// 등록
-	function init() {
-		formtag.addEventListener('submit', handleSubmit)
-	}
 	$(function() {
 
 		var userSeq = '${userSeq}'
@@ -103,19 +95,19 @@
 			"questionTitle" : $('#questionTitle').val(),
 			"questionType" : questionType,
 			"questionAnswer" : questionAnswer,
-			"categorySeq" : categorySeq,
-			"authorSeq" : userSeq
+			"categorySeq" : parseInt(categorySeq),
+			"authorSeq" : parseInt(userSeq)
 
 		}
 
 		var exampleList = new Array();
 
 		if (String(questionType) == "true") {
-			alert("if")
+		
 			for (i = 1; i < 4; i++) {
 
 				var exId = '#example' + i
-				alert($(exId).val())
+			
 				exampleList.push({
 					example : $(exId).val()
 				})
@@ -123,15 +115,18 @@
 		}
 
 		var data = {
-			"questionData" : questionData,
+			"question" : questionData,
 			"exampleList" : exampleList
 		}
+
+		console.log(data)
 
 		$.ajax({
 			url : "/question/create",
 			type : "POST",
+			contentType: 'application/json',
 			dataType : 'json',
-			data : data,
+			data : JSON.stringify(data),
 			success : function(result) {
 
 				alert(result.resultMessage)

@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,20 +35,19 @@ public class QuestionController {
 	}
 
 	@RequestMapping(value = "/question/create", method = RequestMethod.POST)
-	public @ResponseBody ResultDto creatQuestion(CreateQuestionDto createQuestionDto) {
+	public @ResponseBody ResultDto creatQuestion(@RequestBody CreateQuestionDto createQuestionDto) {
 
-		logger.debug("[creatQuestion] start /question/create post");
-		logger.debug("[getQuestionList] createQuestionDto is : " + createQuestionDto);
+		logger.info("[creatQuestion] start /question/create post");
+		logger.info("[getQuestionList] createQuestionDto is : " + createQuestionDto);
 
-		return questionService.getQuestionList(new QuestionDto());
+		return questionService.createQuestion(createQuestionDto);
 	}
 
 	@RequestMapping(value = "/question/list", method = RequestMethod.POST)
 	public @ResponseBody ResultDto getQuestionList(QuestionDto questionDto) {
 
-		logger.debug("[getQuestionList] start /question/list POST");
-		logger.debug("[getQuestionList] test zz");
-		logger.debug("[getQuestionList] questionDto is : " + questionDto);
+		logger.info("[getQuestionList] start /question/list POST");
+		logger.info("[getQuestionList] questionDto is : " + questionDto);
 			
 		return questionService.getQuestionList(questionDto);
 	}

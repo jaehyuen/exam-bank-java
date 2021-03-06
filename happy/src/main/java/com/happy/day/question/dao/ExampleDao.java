@@ -10,19 +10,17 @@ import com.happy.day.question.dto.ExampleDto;
 import com.happy.day.question.dto.QuestionDto;
 
 @Repository
-public class QuestionDao {
-
+public class ExampleDao {
+	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-
-	public List<QuestionDto> getQuestionList(QuestionDto questionDto) {
-		return sqlSession.selectList("selectQuestionList", questionDto);
+	
+	
+	public void insertExample(ExampleDto exampleDto) {
+		sqlSession.insert("insertExample",exampleDto);
 	}
+	
+	
 
-	public int insertQuestion(QuestionDto questionDto) {
-
-		sqlSession.insert("insertQuestion", questionDto);
-		return questionDto.getQuestionSeq();
-	}
-
+	
 }
