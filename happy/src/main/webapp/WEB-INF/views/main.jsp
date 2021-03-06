@@ -18,151 +18,124 @@
     <script type="text/javascript" src="/css/slide.js"></script>
 
     <script>
-        $(function () {
+    $(function () {
 
-            var userSeq = '${userSeq}'
-            var currentPage = '${currentPage}'
+        var userSeq = '${userSeq}'
+        var currentPage = '${currentPage}'
 
-            getCategoryList(userSeq, currentPage)
+        getCategoryList(userSeq, currentPage)
 
-            var categorySeq = location.pathname.replace("/main", "").replace("/", "");
+        var categorySeq = location.pathname.replace("/main", "").replace("/", "");
 
+        if (categorySeq != "") {
 
-            if (categorySeq != "") {
+            getQuestionList(userSeq, categorySeq)
+            addQuestionDiv(userSeq, categorySeq)
 
-                getQuestionList(categorySeq)
-
-                addQuestionDiv(userSeq, categorySeq)
-
-            }
-        });
+        }
+    });
 
 
-        function addQuestionDiv(userSeq, categorySeq) {
+    function addQuestionDiv(userSeq, categorySeq) {
 
-            var str = ""
+        var str = ""
 
-            str += "<div class='exam-start-div'>"
-            if (userSeq == 0) {
-                str += "<a href='/user/login' class='exam-start'>start</a>"
-            } else {
-                str += "<a href='/question/start/" + categorySeq + "' class='exam-start'>start</a>"
-            }
+        str += "<div class='exam-start-div'>"
+        if (userSeq == 0) {
+            str += "<a href='/user/login' class='exam-start'>start</a>"
+        } else {
+            str += "<a href='/question/start/" + categorySeq + "' class='exam-start'>start</a>"
+        }
 
-            str += "</div>"
-            str += "<div class='tool-exam1-div1'>"
-            if (userSeq == 0) {
-                str += "<a href='/user/login' class='tool-exam1'>문제만들기</a>"
-            } else {
-                str += "<a href='/question/create/" + categorySeq + "' class='tool-exam1'>문제만들기</a>"
-            }
+        str += "</div>"
+        str += "<div class='tool-exam1-div1'>"
+        if (userSeq == 0) {
+            str += "<a href='/user/login' class='tool-exam1'>문제만들기</a>"
+        } else {
+            str += "<a href='/question/create/" + categorySeq + "' class='tool-exam1'>문제만들기</a>"
+        }
 
-            str += "</div>"
+        str += "</div>"
+        $("#tool-exam").html(str)
 
+    }
 
-     
-            $("#tool-exam").html(str)
+    function getCategoryList(authorSeq, currentPage) {
 
+        var data = {
+            "authorSeq": authorSeq == "" ? 0 : authorSeq,
+            "page": currentPage == "" ? 1 : currentPage
 
         }
 
-        function getCategoryList(authorSeq, currentPage) {
+        $.ajax({
+            url: "/category/listPage",
+            type: "GET",
+            dataType: 'json',
+            data: data,
+            success: function (result) {
+                $.each(result.resultData.reverse(), function (i, category) {
 
+                    var str = ""
 
-            var data = {
-                "authorSeq": authorSeq == "" ? 0 : authorSeq,
-                "page": currentPage == "" ? 1 : currentPage,
+                    str += "<div class='main-div-cate'>"
+                    str += "<a href='/main/" + category.categorySeq + "'"
+                    str += "class='body-div-main-div1-a'>" + category.categoryName + "</a>"
+                    if (!category.categoryFlag) {
+                        str += "&nbsp <i class='fas fa-lock'>"
 
+                    }
+
+                    str += "</div>"
+                    $("#main-div1").prepend(str)
+
+                });
+            },
+            error: function (xhr, resp, text) {
+                console.log(xhr, resp, text);
             }
+        })
+    }
 
+    function getQuestionList(userSeq, categorySeq) {
 
-            $.ajax({
-                url: "/category/listPage",
-                type: "GET",
-                dataType: 'json',
-                data: data,
-                success: function (result) {
-
-  
-                    console.log(result.resultData)
-                    $.each(result.resultData.reverse(), function (i, category) {
-
-                        var str = ""
-
-                        str += "<div class='main-div-cate'>"
-                        str += "<a href='/main/" + category.categorySeq + "'"
-                        str += "class='body-div-main-div1-a'>" + category.categoryName + "</a>"
-                        if (!category.categoryFlag) {
-                            str += "&nbsp <i class='fas fa-lock'>"
-
-                        }
-
-                        str += "</div>"
-                        //	$("#main-div2").append(str)
-                        $("#main-div1").prepend(str)
-
-                    });
-
-
-                },
-                error: function (xhr, resp, text) {
-                    console.log(xhr, resp, text);
-                }
-            })
+        var data = {
+            "categorySeq": categorySeq
         }
 
-        function getQuestionList(categorySeq) {
+        $.ajax({
+            url: "/question/list",
+            type: "POST",
+            dataType: 'json',
+            data: data,
+            success: function (result) {
+                $.each(result.resultData.reverse(), function (i, question) {
+                    var str = ""
 
-            var data = {
-                "categorySeq": categorySeq
+                    str += "<div class='input-div-flex'>"
+                    str += "<a href='/post/exam/'+tes._id class='main-exam'>"
+                    str += "<div class='main-exam-div1'>" + question.questionTitle
+                    str += "</div>"
+                    str += "<div class='main-exam-div2'>"
+                    str += "<div>by " + question.authorSeq
+                    str += "</div>"
+                    str += "</div>"
+                    str += "<a class='input-sym' href='/user/err'>"
+                    str += "<i class='far fa-heart'>"
+                    str += "</a>"
+                    str += "</a>"
+                    str += "</div>"
+
+                    $("#main-div2").prepend(str)
+                });
+
+            },
+            error: function (xhr, resp, text) {
+                console.log(xhr, resp, text);
             }
+        })
 
-            $.ajax({
-                url: "/question/list",
-                type: "POST",
-                dataType: 'json',
-                data: data,
-                success: function (result) {
-
-                	  console.log(result.resultData)
-                	  
-					 $.each(result.resultData, function (i, category) {
-						 var str = ""
-
-		                        str += "<div class='input-div-flex'>"
-		                       // str += "<a href='/post/exam/'+tes._id>"
-		                     
-		                 
-		                       // str += "</a>"
-		                        str += "</div>"
-		                        
-		                        //    div.input-div-flex
-		                        //    a.main-exam(href='/post/exam/'+tes._id)
-		                        //      div.main-exam-div1= tes.title+'['+tes.recommend.length+']'
-		                        //      
-		                        //      div.main-exam-div2                       
-		                        //          div= 'by'+tes.author
-		                        //    if displayname=='login'      
-		                        //      a.input-sym(href='/user/err')    
-		                        //        i(class='far fa-heart')
-		                        //    else
-		                        //      a.input-sym(href='/post/recommend/'+tes._id)    
-		                        //       i(class='far fa-heart')
-		                     
-		$("#main-div2").append(str)
-                    });
-                      console.log(str)
-                	  
-                	  
-
-                	  
-                },
-                error: function (xhr, resp, text) {
-                    console.log(xhr, resp, text);
-                }
-            })
-
-        }
+    }
     </script>
 
 </head>
