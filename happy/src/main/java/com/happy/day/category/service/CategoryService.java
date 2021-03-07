@@ -34,6 +34,21 @@ public class CategoryService {
 
 	}
 
+	public ResultDto editCategory(CategoryDto categoryDto) {
+
+		try {
+			categoryDao.updateCategory(categoryDto);
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+			return util.setResult("9999", false, "카테고리 수정 실패", "");
+		}
+
+		return util.setResult("0000", true, "카테고리 수정 성공", "");
+
+	}
+
 	public ResultDto getCategoryListByPage(CategoryDto categoryDto) {
 
 		List<CategoryDto> catgoryList = null;

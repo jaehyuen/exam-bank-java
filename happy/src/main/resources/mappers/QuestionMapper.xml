@@ -8,17 +8,18 @@
 		select
 		a.QUESTION_SEQ,
 		a.QUESTION_TITLE,
-		b.USER_NAME
-		AS AUTHOR_NAME from question AS a
-		JOIN
-		user AS b
-		ON a.AUTHOR_SEQ=b.USER_SEQ
-		AND a.CATEGORY_SEQ=#{categorySeq};
+		b.USER_NAME AS AUTHOR_NAME,
+		c.AUTHOR_SEQ as CATEGORY_AUTHOR_SEQ
+		from question AS a
+		JOIN user AS b
+		ON a.AUTHOR_SEQ=b.USER_SEQ AND a.CATEGORY_SEQ=#{categorySeq}
+		JOIN category as c
+		ON a.CATEGORY_SEQ=c.CATEGORY_SEQ;
 	</select>
 
 	<select id="selectQuestion" parameterType="questionDto"
 		resultType="questionDto">
-	select * from question where QUESTION_SEQ=#{questionSeq}
+		select * from question where QUESTION_SEQ=#{questionSeq}
 	</select>
 
 	<insert id="insertQuestion" parameterType="questionDto"

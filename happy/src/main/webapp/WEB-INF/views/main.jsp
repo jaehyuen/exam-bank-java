@@ -30,7 +30,7 @@
         if (categorySeq != "") {
 
             getQuestionList(userSeq, categorySeq)
-            addQuestionDiv(userSeq, categorySeq)
+            //       addQuestionDiv(userSeq, categorySeq)
 
         }
     });
@@ -74,6 +74,9 @@
             dataType: 'json',
             data: data,
             success: function (result) {
+
+
+
                 $.each(result.resultData.reverse(), function (i, category) {
 
                     var str = ""
@@ -109,11 +112,41 @@
             dataType: 'json',
             data: data,
             success: function (result) {
+
+                var str = ""
+
+                str += "<div class='exam-start-div'>"
+                if (userSeq == 0) {
+                    str += "<a href='/user/login' class='exam-start'>start</a>"
+                } else {
+                    str += "<a href='/question/start/" + categorySeq + "' class='exam-start'>start</a>"
+                }
+
+                str += "</div>"
+                str += "<div class='tool-exam1-div1'>"
+                if (userSeq == 0) {
+                    str += "<a href='/user/login' class='tool-exam1'>문제만들기</a>"
+                } else {
+                    str += "<a href='/question/create/" + categorySeq + "' class='tool-exam1'>문제만들기</a>"
+                    if (result.resultData.length > 0 ){
+                    	if(result.resultData[0].categoryAuthorSeq == userSeq) {
+                    
+                        str += "</div>"
+                        str += "<div class='tool-exam1-div2'>"
+                        str += "<a href='/category/edit/" + categorySeq + "' class='tool-exam1'>카테고리 수정</a>"
+                    }
+                    }
+
+                }
+
+                str += "</div>"
+                $("#tool-exam").html(str)
+
                 $.each(result.resultData.reverse(), function (i, question) {
                     var str = ""
 
                     str += "<div class='input-div-flex'>"
-                    str += "<a href='/question/"+question.questionSeq+"' class='main-exam'>"
+                    str += "<a href='/question/" + question.questionSeq + "' class='main-exam'>"
                     str += "<div class='main-exam-div1'>" + question.questionTitle
                     str += "</div>"
                     str += "<div class='main-exam-div2'>"

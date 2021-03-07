@@ -35,5 +35,8 @@ public class CategoryDao {
 	public void insertCategory (CategoryDto categoryDto) {
 		sqlSession.insert("insertCategory",categoryDto);
 	}
+	public void updateCategory(CategoryDto categoryDto) {
+		sqlSession.update("updateCategory",categoryDto);
+	}
 	
 }

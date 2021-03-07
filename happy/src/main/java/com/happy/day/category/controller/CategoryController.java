@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.happy.day.category.dto.CategoryDto;
 import com.happy.day.category.service.CategoryService;
 import com.happy.day.common.dto.ResultDto;
+import com.happy.day.question.dto.QuestionInfoDto;
 
 /**
  * Handles requests for the application home page.
@@ -26,11 +28,19 @@ public class CategoryController {
 	private static final Logger logger = LoggerFactory.getLogger(CategoryController.class);
 
 	@RequestMapping(value = "/category/create", method = RequestMethod.GET)
-	public String createPage() {
+	public String createCategoryPage() {
 
-		logger.debug("[createPage] start /category/create get");
+		logger.debug("[createCategoryPage] start /category/create get");
 		
 		return "category/createCategory";
+	}
+	
+	@RequestMapping(value = "/category/edit/{id}", method = RequestMethod.GET)
+	public String editCategoryPage() {
+
+		logger.debug("[editCategoryPage] start /category/edit/{id} get");
+		
+		return "category/editCategory";
 	}
 	
 	@RequestMapping(value = "/category/listPage", method = RequestMethod.GET)
@@ -74,4 +84,12 @@ public class CategoryController {
 		return categoryService.createCategory(categoryDto);
 	}
 
+	@RequestMapping(value = "/category/edit", method = RequestMethod.POST)
+	public @ResponseBody ResultDto editCategory(@RequestBody CategoryDto categoryDto) {
+		
+		logger.debug("[editCategory] start /category/edit post");
+		logger.debug("[editCategory] categoryDto is : " + categoryDto);
+		
+		return categoryService.editCategory(categoryDto);
+	}
 }
