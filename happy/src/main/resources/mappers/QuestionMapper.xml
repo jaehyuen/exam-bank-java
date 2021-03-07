@@ -5,15 +5,20 @@
 
 	<select id="selectQuestionList" parameterType="questionDto"
 		resultType="questionListDto">
-		select 
-			a.QUESTION_SEQ,
-			a.QUESTION_TITLE, 
-			b.USER_NAME 
+		select
+		a.QUESTION_SEQ,
+		a.QUESTION_TITLE,
+		b.USER_NAME
 		AS AUTHOR_NAME from question AS a
-		JOIN 
-		user AS b 
-			ON a.AUTHOR_SEQ=b.USER_SEQ 
-				AND a.CATEGORY_SEQ=#{categorySeq};
+		JOIN
+		user AS b
+		ON a.AUTHOR_SEQ=b.USER_SEQ
+		AND a.CATEGORY_SEQ=#{categorySeq};
+	</select>
+
+	<select id="selectQuestion" parameterType="questionDto"
+		resultType="questionDto">
+	select * from question where QUESTION_SEQ=#{questionSeq}
 	</select>
 
 	<insert id="insertQuestion" parameterType="questionDto"
@@ -25,7 +30,8 @@
 		QUESTION_ANSWER,
 		AUTHOR_SEQ,
 		CATEGORY_SEQ
-		) VALUES
+		)
+		VALUES
 		(
 		#{questionTitle},
 		#{questionType},

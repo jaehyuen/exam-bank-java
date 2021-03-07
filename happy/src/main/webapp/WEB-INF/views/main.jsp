@@ -105,7 +105,7 @@
 
         $.ajax({
             url: "/question/list",
-            type: "POST",
+            type: "GET",
             dataType: 'json',
             data: data,
             success: function (result) {

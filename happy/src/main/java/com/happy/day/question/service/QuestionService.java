@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 import com.happy.day.common.dto.ResultDto;
 import com.happy.day.question.dao.ExampleDao;
 import com.happy.day.question.dao.QuestionDao;
-import com.happy.day.question.dto.CreateQuestionDto;
 import com.happy.day.question.dto.ExampleDto;
 import com.happy.day.question.dto.QuestionDto;
+import com.happy.day.question.dto.QuestionInfoDto;
 import com.happy.day.question.dto.QuestionListDto;
 import com.happy.day.util.Util;
 
@@ -30,7 +30,7 @@ public class QuestionService {
 		List<QuestionListDto> questionList = null;
 		try {
 
-			questionList = questionDao.getQuestionList(questionDto);
+			questionList = questionDao.selectQuestionList(questionDto);
 
 		} catch (Exception e) {
 
@@ -43,13 +43,41 @@ public class QuestionService {
 
 	}
 
-	public ResultDto createQuestion(CreateQuestionDto createQuestionDto) {
+	public ResultDto getQuestionInfo(QuestionDto questionDto) {
+
+		QuestionInfoDto questionInfo = new QuestionInfoDto();
+		try {
+
+			QuestionDto question = questionDao.selectQuestion(questionDto);
+			List<ExampleDto> exampleList = null;
+
+			System.out.println(question);
+			if (question.isQuestionType()) {
+				exampleList = exampleDao.selectExampleList(question.getQuestionSeq());
+
+			}
+			
+			questionInfo.setQuestion(question);
+			questionInfo.setExampleList(exampleList);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+			return util.setResult("9999", false, "문제 조회 실패", "");
+		}
+
+		return util.setResult("0000", true, "문제 조회 성공", questionInfo);
+
+	}
+
+	public ResultDto createQuestion(QuestionInfoDto questionInfoDto) {
 
 		try {
-			
-			int questionSeq = questionDao.insertQuestion(createQuestionDto.getQuestion());
 
-			for (ExampleDto exampleDto : createQuestionDto.getExampleList()) {
+			int questionSeq = questionDao.insertQuestion(questionInfoDto.getQuestion());
+
+			for (ExampleDto exampleDto : questionInfoDto.getExampleList()) {
 				exampleDto.setQuestionSeq(questionSeq);
 				exampleDao.insertExample(exampleDto);
 			}

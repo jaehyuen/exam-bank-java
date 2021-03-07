@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.happy.day.question.dto.ExampleDto;
 import com.happy.day.question.dto.QuestionDto;
+import com.happy.day.question.dto.QuestionListDto;
 
 @Repository
 public class ExampleDao {
@@ -20,7 +21,9 @@ public class ExampleDao {
 		sqlSession.insert("insertExample",exampleDto);
 	}
 	
-	
+	public List<ExampleDto> selectExampleList(int questionSeq) {
+		return sqlSession.selectList("selectExampleList", questionSeq);
+	}
 
 	
 }

@@ -16,4 +16,11 @@
 		)
 	</insert>
 
+	<select id="selectExampleList" parameterType="int" resultType="exampleDto">
+		select
+		* FROM
+		example
+		WHERE QUESTION_SEQ=#{questionSeq};
+	</select>
+
 </mapper>

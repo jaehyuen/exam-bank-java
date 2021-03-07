@@ -12,6 +12,7 @@
 		<typeAlias type="com.happy.day.question.dto.ExampleDto" alias="exampleDto"/>
 		<typeAlias type="com.happy.day.question.dto.QuestionDto" alias="questionDto"/>
 		<typeAlias type="com.happy.day.question.dto.QuestionListDto" alias="questionListDto"/>
+		<typeAlias type="com.happy.day.question.dto.QuestionInfoDto" alias="questionInfoDto"/>
 		<typeAlias type="com.happy.day.category.dto.CategoryDto" alias="categoryDto"/>
 	</typeAliases>
 

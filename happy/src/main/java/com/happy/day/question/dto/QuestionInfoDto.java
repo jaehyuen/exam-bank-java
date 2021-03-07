@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class CreateQuestionDto {
+public class QuestionInfoDto {
 
 	private QuestionDto question;
 	private List<ExampleDto> exampleList;
