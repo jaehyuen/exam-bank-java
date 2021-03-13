@@ -19,19 +19,21 @@ if (userId == null) {
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 <script>
+var userSeq
+var currentPage
 $(function () {
 
-    var userSeq = '${userSeq}'
-    var currentPage = '${currentPage}'
+     userSeq = '${userSeq}'
+     currentPage = '${currentPage}'
 
     var categorySeq = location.pathname.replace("/question", "").replace("/", "");
 
     if (categorySeq == "") {
-    	location.href = "/main"
+        location.href = "/main"
 
     }
     getQuestionInfo(userSeq, categorySeq)
-    
+
 
 });
 
@@ -47,29 +49,47 @@ function getQuestionInfo(authorSeq, questionSeq) {
         dataType: 'json',
         data: data,
         success: function (result) {
-        	
-        	console.log(result.resultData)
-        	// $.each(result.resultData.reverse(), function (i, category) {
 
-//          var str = ""
+            var question = result.resultData.question;
+            var str = ""
+            str += "<h1 class='main-div-h1' id='main-div-h1'>" + question.questionTitle + "</h1>"
 
-//          str += "<div class='main-div-cate'>"
-//          str += "<a href='/main/" + category.categorySeq + "'"
-//          str += "class='body-div-main-div1-a'>" + category.categoryName + "</a>"
-//          if (!category.categoryFlag) {
-//              str += "&nbsp <i class='fas fa-lock'>"
+            str += createHtml("정답", question.questionAnswer)
 
-//          }
+            if (result.resultData.exampleList != undefined) {
+                $.each(result.resultData.exampleList, function (i, example) {
+                    str += createHtml("객관식 보기 " + i, example.example)
+                });
 
-//          str += "</div>"
-//          $("#main-div1").prepend(str)
+            }
+            
+            
+           	if(userSeq == question.authorSeq){
+            str +=                "<div class='main-div-input-answer-flex'>"
+            	str += "<a href='/post/exed/60436773e061453750265c5' class='main-div-answer3'>수정 </a>"  
+            	str += "</div>"
+           	}
+            $("#main-div").prepend(str)
 
-     // });
         },
         error: function (xhr, resp, text) {
             console.log(xhr, resp, text);
         }
     })
+}
+
+function createHtml(a, b) {
+    var result = ""
+    result += "<div class='main-div-input-answer-flex1'>"
+    result += "<div class='main-div-input-answer'>"
+    result += "<div class='main-div-answer1'>"
+    result += "<div class='main-div-answer2'>" + a + "</div>"
+    result += "<div class='main-div-answer2'>:</div>"
+    result += "<div class='main-div-answer2'>" + b + "</div>"
+    result += "</div>"
+    result += "</div>"
+    result += "</div>"
+    return result;
 }
 </script>
 
@@ -105,20 +125,8 @@ function getQuestionInfo(authorSeq, questionSeq) {
 			</div>
 		</nav>
 		<main>
-            <div class="main-div">
-                <h1 class="main-div-h1">12qwdw</h1>
-                <div class="main-div-input-answer-flex1">
-                    <div class="main-div-input-answer">
-                        <div class="main-div-answer1">
-                            <div class="main-div-answer2">정답</div>
-                            <div class="main-div-answer2">:</div>
-                            <div class="main-div-answer2">dqwd</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="main-div-input-answer-flex">
-                    <a href="/post/exed/60436773e061453750265c56" class="main-div-answer3">수정 </a>
-                </div>
+            <div class="main-div" id="main-div">
+
                 <div class="main-div-input-answer-flex1"> </div>
             </div>
 		</main>
