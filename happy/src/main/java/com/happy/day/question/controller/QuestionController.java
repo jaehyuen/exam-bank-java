@@ -33,13 +33,13 @@ public class QuestionController {
 		return "question/createQuestion";
 	}
 	
-//	@RequestMapping(value = "/question/edit/{id}", method = RequestMethod.GET)
-//	public String editQuestionPage() {
-//
-//		logger.debug("[editQuestionPage] start /question/edit/{id} get");
-//
-//		return "question/editQuestion";
-//	}
+	@RequestMapping(value = "/question/edit/{id}", method = RequestMethod.GET)
+	public String editQuestionPage() {
+
+		logger.debug("[editQuestionPage] start /question/edit/{id} get");
+
+		return "question/editQuestion";
+	}
 	
 	@RequestMapping(value = "/question/{id}", method = RequestMethod.GET)
 	public String questionPage() {
@@ -70,8 +70,8 @@ public class QuestionController {
 	@RequestMapping(value = "/question/info", method = RequestMethod.GET)
 	public @ResponseBody ResultDto getQuestionInfo(QuestionDto questionDto) {
 
-		logger.info("[getQuestionInfo] start /question/info GET");
-		logger.info("[getQuestionInfo] questionDto is : " + questionDto);
+		logger.debug("[getQuestionInfo] start /question/info GET");
+		logger.debug("[getQuestionInfo] questionDto is : " + questionDto);
 			
 		return questionService.getQuestionInfo(questionDto);
 	}

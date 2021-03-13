@@ -23,8 +23,8 @@ var userSeq
 var currentPage
 $(function () {
 
-     userSeq = '${userSeq}'
-     currentPage = '${currentPage}'
+    userSeq = '${userSeq}'
+    currentPage = '${currentPage}'
 
     var categorySeq = location.pathname.replace("/question", "").replace("/", "");
 
@@ -51,6 +51,7 @@ function getQuestionInfo(authorSeq, questionSeq) {
         success: function (result) {
 
             var question = result.resultData.question;
+            console.log(question)
             var str = ""
             str += "<h1 class='main-div-h1' id='main-div-h1'>" + question.questionTitle + "</h1>"
 
@@ -58,17 +59,18 @@ function getQuestionInfo(authorSeq, questionSeq) {
 
             if (result.resultData.exampleList != undefined) {
                 $.each(result.resultData.exampleList, function (i, example) {
-                    str += createHtml("객관식 보기 " + i, example.example)
+                    str += createHtml("객관식 보기 " + (i+1), example.example)
                 });
 
             }
+
+
+            if (userSeq == question.authorSeq) {
+                str += "<div class='main-div-input-answer-flex'>"
+                str += "<a href='/question/edit/" + question.questionSeq + "' class='main-div-answer3'>수정 </a>"
+                str += "</div>"
+            }
             
-            
-           	if(userSeq == question.authorSeq){
-            str +=                "<div class='main-div-input-answer-flex'>"
-            	str += "<a href='/post/exed/60436773e061453750265c5' class='main-div-answer3'>수정 </a>"  
-            	str += "</div>"
-           	}
             $("#main-div").prepend(str)
 
         },
