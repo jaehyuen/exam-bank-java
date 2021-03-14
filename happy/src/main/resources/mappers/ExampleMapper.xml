@@ -23,4 +23,13 @@
 		WHERE QUESTION_SEQ=#{questionSeq};
 	</select>
 
+	<update id="updateExample" parameterType="exampleDto">
+		UPDATE
+		example SET
+		example=#{example} where EXAMPLE_SEQ=#{exampleSeq}
+	</update>
+	<delete id="deleteExample" parameterType="int">
+		delete from example where EXAMPLE_SEQ=#{exampleSeq}
+	</delete>
+
 </mapper>

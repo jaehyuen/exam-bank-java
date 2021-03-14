@@ -76,4 +76,13 @@ public class QuestionController {
 		return questionService.getQuestionInfo(questionDto);
 	}
 
+	
+	@RequestMapping(value = "/question/edit", method = RequestMethod.POST)
+	public @ResponseBody ResultDto editQuestion(@RequestBody QuestionInfoDto questionInfoDto) {
+
+		logger.debug("[getQuestionInfo] start /question/edit POST");
+		logger.debug("[getQuestionInfo] editQuestion is : " + questionInfoDto);
+			
+		return questionService.editQuestion(questionInfoDto);
+	}
 }

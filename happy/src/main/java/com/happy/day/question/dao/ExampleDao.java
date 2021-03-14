@@ -12,18 +12,23 @@ import com.happy.day.question.dto.QuestionListDto;
 
 @Repository
 public class ExampleDao {
-	
+
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-	
-	
+
 	public void insertExample(ExampleDto exampleDto) {
-		sqlSession.insert("insertExample",exampleDto);
+		sqlSession.insert("insertExample", exampleDto);
 	}
-	
+
 	public List<ExampleDto> selectExampleList(int questionSeq) {
 		return sqlSession.selectList("selectExampleList", questionSeq);
 	}
 
-	
+	public void updateExample(ExampleDto exampleDto) {
+		sqlSession.update("updateExample", exampleDto);
+	}
+
+	public void deleteExample(int questionSeq) {
+		sqlSession.delete("deleteExample", questionSeq);
+	}
 }

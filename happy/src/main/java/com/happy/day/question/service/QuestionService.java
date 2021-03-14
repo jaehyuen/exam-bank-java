@@ -56,7 +56,7 @@ public class QuestionService {
 				exampleList = exampleDao.selectExampleList(question.getQuestionSeq());
 
 			}
-			
+
 			questionInfo.setQuestion(question);
 			questionInfo.setExampleList(exampleList);
 
@@ -90,6 +90,45 @@ public class QuestionService {
 		}
 
 		return util.setResult("0000", true, "문제 생성 성공", "");
+
+	}
+
+	public ResultDto editQuestion(QuestionInfoDto questionInfoDto) {
+
+		try {
+
+			QuestionDto preQuestionDto = questionDao.selectQuestion(questionInfoDto.getQuestion());
+			QuestionDto postQuestionDto = questionDao.updateQuestion(questionInfoDto.getQuestion());
+
+			if (preQuestionDto.isQuestionType() != postQuestionDto.isQuestionType()) {
+
+				if (postQuestionDto.isQuestionType() == false) {
+
+					exampleDao.deleteExample(postQuestionDto.getQuestionSeq());
+
+				} else {
+					
+					for (ExampleDto exampleDto : questionInfoDto.getExampleList()) {
+						exampleDto.setQuestionSeq(postQuestionDto.getQuestionSeq());
+						exampleDao.insertExample(exampleDto);
+					}
+				}
+
+			} else {
+
+				for (ExampleDto exampleDto : questionInfoDto.getExampleList()) {
+					exampleDao.updateExample(exampleDto);
+				}
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+			return util.setResult("9999", false, "문제 수정 실패", "");
+		}
+
+		return util.setResult("0000", true, "문제 수정 성공", "");
 
 	}
 }

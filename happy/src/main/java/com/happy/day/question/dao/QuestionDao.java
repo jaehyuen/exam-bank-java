@@ -19,7 +19,7 @@ public class QuestionDao {
 	public List<QuestionListDto> selectQuestionList(QuestionDto questionDto) {
 		return sqlSession.selectList("selectQuestionList", questionDto);
 	}
-	
+
 	public QuestionDto selectQuestion(QuestionDto questionDto) {
 		return sqlSession.selectOne("selectQuestion", questionDto);
 	}
@@ -28,6 +28,11 @@ public class QuestionDao {
 
 		sqlSession.insert("insertQuestion", questionDto);
 		return questionDto.getQuestionSeq();
+	}
+
+	public QuestionDto updateQuestion(QuestionDto questionDto) {
+		sqlSession.update("updateQuestion", questionDto);
+		return questionDto;
 	}
 
 }

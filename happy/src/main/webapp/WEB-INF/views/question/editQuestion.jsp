@@ -23,6 +23,8 @@
 
 var userSeq
 var currentPage
+var questionSeq
+var exampleSeqList=[];
 
 
 $(function () {
@@ -30,13 +32,35 @@ $(function () {
     userSeq = '${userSeq}'
     currentPage = '${currentPage}'
 
-    var questionSeq = location.pathname.replace("/question/edit", "").replace("/", "");
+    	questionSeq = location.pathname.replace("/question/edit", "").replace("/", "");
 
     if (questionSeq == "") {
         location.href = "/main"
 
     }
     getQuestionInfo(questionSeq)
+    
+	$("input[name=questionType]").change(function() {
+
+		var radioValue = String($(this).val());
+
+		if (radioValue == "true") {
+
+			$('.questionType1').prop('required', true);
+			$('.questionType2').prop('required', false);
+
+			$(".slide_div").show();
+			$(".slide_div2").hide();
+
+		} else if (radioValue == "false") {
+
+			$('.questionType1').prop('required', false);
+			$('.questionType2').prop('required', true);
+			$(".slide_div").hide();
+			$(".slide_div2").show();
+		}
+
+	});
 
 });
 
@@ -55,6 +79,7 @@ function getQuestionInfo(questionSeq) {
 
             var question = result.resultData.question;
             categorySeq = question.categorySeq;
+       
             console.log(question)
 
             $('#questionTitle').val(question.questionTitle)
@@ -65,11 +90,15 @@ function getQuestionInfo(questionSeq) {
 
                 $('#questionType1').prop('checked', true);
                 $('#questionType2').prop('checked', false);
+                $('.questionType1').prop('required', true);
+    			$('.questionType2').prop('required', false);
                 $(".slide_div").show();
                 $(".slide_div2").hide();
             } else {
                 $('#questionType1').prop('checked', false);
                 $('#questionType2').prop('checked', true);
+                $('.questionType1').prop('required', false);
+    			$('.questionType2').prop('required', true);
                 $(".slide_div").hide();
                 $(".slide_div2").show();
             }
@@ -79,6 +108,7 @@ function getQuestionInfo(questionSeq) {
 
                     var exId = '#example' + (i + 1)
                     $(exId).val(example.example)
+                    exampleSeqList.push(example.exampleSeq)
 
                 });
 
@@ -119,6 +149,7 @@ function editQuestion() {
         '#questionAnswer1').val() : $('#questionAnswer2').val()
 
     var questionData = {
+        		"questionSeq":questionSeq,
         "questionTitle": $('#questionTitle').val(),
         "questionType": questionType,
         "questionAnswer": questionAnswer,
@@ -136,7 +167,8 @@ function editQuestion() {
             var exId = '#example' + i
 
             exampleList.push({
-                example: $(exId).val()
+                example: $(exId).val(),
+                exampleSeq: exampleSeqList[i-1] 
             })
         }
     }
@@ -146,8 +178,8 @@ function editQuestion() {
         "exampleList": exampleList
     }
 
-    console.log(data)
-    /*
+    console.log(data + "수정 시작")
+    
         $.ajax({
             url: "/question/edit",
             type: "POST",
@@ -158,15 +190,15 @@ function editQuestion() {
     
                 alert(result.resultMessage)
     
-                if (result.resultFlag) {
-                    location.href = "/main/" + categorySeq
-                }
+               // if (result.resultFlag) {
+               //     location.href = "/main/" + categorySeq
+               // }
             },
             error: function (xhr, resp, text) {
                 console.log(xhr, resp, text);
             }
         })
-        */
+        
 
 }
 </script>
