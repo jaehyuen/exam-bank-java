@@ -18,10 +18,11 @@
     <script type="text/javascript" src="/css/slide.js"></script>
 
     <script>
+    var userSeq = '${userSeq}'
+        var currentPage = '${currentPage}'
     $(function () {
 
-        var userSeq = '${userSeq}'
-        var currentPage = '${currentPage}'
+       
 
         getCategoryList(userSeq, currentPage)
 
@@ -82,7 +83,7 @@
                     var str = ""
 
                     str += "<div class='main-div-cate'>"
-                    str += "<a href='/main/" + category.categorySeq + "'"
+                    str += "<a href='/main/" + category.categorySeq + "?page="+currentPage+"'"
                     str += "class='body-div-main-div1-a'>" + category.categoryName + "</a>"
                     if (!category.categoryFlag) {
                         str += "&nbsp <i class='fas fa-lock'>"
