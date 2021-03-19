@@ -20,8 +20,12 @@ public class QuestionDao {
 		return sqlSession.selectList("selectQuestionList", questionDto);
 	}
 
-	public QuestionDto selectQuestion(QuestionDto questionDto) {
-		return sqlSession.selectOne("selectQuestion", questionDto);
+	public QuestionDto selectQuestionInfo(QuestionDto questionDto) {
+		return sqlSession.selectOne("QuestionDto", questionDto);
+	}
+
+	public List<QuestionDto> selectQuestionInfoList(QuestionDto questionDto) {
+		return sqlSession.selectList("selectQuestionInfoList", questionDto);
 	}
 
 	public int insertQuestion(QuestionDto questionDto) {

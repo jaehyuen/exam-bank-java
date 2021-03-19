@@ -1,5 +1,6 @@
 package com.happy.day.question.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,7 @@ public class QuestionService {
 		QuestionInfoDto questionInfo = new QuestionInfoDto();
 		try {
 
-			QuestionDto question = questionDao.selectQuestion(questionDto);
+			QuestionDto question = questionDao.selectQuestionInfo(questionDto);
 			List<ExampleDto> exampleList = null;
 
 			System.out.println(question);
@@ -68,6 +69,40 @@ public class QuestionService {
 		}
 
 		return util.setResult("0000", true, "문제 조회 성공", questionInfo);
+
+	}
+
+	public ResultDto getQuestionInfoList(QuestionDto questionDto) {
+
+		List<QuestionInfoDto> questionInfoList = new ArrayList<QuestionInfoDto>();
+		try {
+
+			List<QuestionDto> questionList = questionDao.selectQuestionInfoList(questionDto);
+			List<ExampleDto> exampleList = null;
+
+			for (QuestionDto question : questionList) {
+				QuestionInfoDto questionInfo = new QuestionInfoDto();
+
+				System.out.println(question);
+				if (question.isQuestionType()) {
+					exampleList = exampleDao.selectExampleList(question.getQuestionSeq());
+
+				}
+
+				questionInfo.setQuestion(question);
+				questionInfo.setExampleList(exampleList);
+				questionInfoList.add(questionInfo);
+
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+			return util.setResult("9999", false, "문제 조회 실패", "");
+		}
+
+		return util.setResult("0000", true, "문제 조회 성공", questionInfoList);
 
 	}
 
@@ -97,7 +132,7 @@ public class QuestionService {
 
 		try {
 
-			QuestionDto preQuestionDto = questionDao.selectQuestion(questionInfoDto.getQuestion());
+			QuestionDto preQuestionDto = questionDao.selectQuestionInfo(questionInfoDto.getQuestion());
 			QuestionDto postQuestionDto = questionDao.updateQuestion(questionInfoDto.getQuestion());
 
 			if (preQuestionDto.isQuestionType() != postQuestionDto.isQuestionType()) {
@@ -107,7 +142,7 @@ public class QuestionService {
 					exampleDao.deleteExample(postQuestionDto.getQuestionSeq());
 
 				} else {
-					
+
 					for (ExampleDto exampleDto : questionInfoDto.getExampleList()) {
 						exampleDto.setQuestionSeq(postQuestionDto.getQuestionSeq());
 						exampleDao.insertExample(exampleDto);

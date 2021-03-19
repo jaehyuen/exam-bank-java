@@ -35,6 +35,14 @@ public class CategoryController {
 		return "category/createCategory";
 	}
 	
+	@RequestMapping(value = "/category/start/{id}", method = RequestMethod.GET)
+	public String startCategoryPage() {
+
+		logger.debug("[startCategoryPage] start /category/create/{id} get");
+		
+		return "category/startCategory";
+	}
+	
 	@RequestMapping(value = "/category/edit/{id}", method = RequestMethod.GET)
 	public String editCategoryPage() {
 

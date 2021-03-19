@@ -19,7 +19,12 @@
 		ON a.CATEGORY_SEQ=c.CATEGORY_SEQ;
 	</select>
 
-	<select id="selectQuestion" parameterType="questionDto"
+	<select id="selectQuestionInfoList" parameterType="questionDto"
+		resultType="questionDto">
+		select * from question where CATEGORY_SEQ=#{categorySeq}
+	</select>
+
+	<select id="selectQuestionInfo" parameterType="questionDto"
 		resultType="questionDto">
 		select * from question where QUESTION_SEQ=#{questionSeq}
 	</select>
