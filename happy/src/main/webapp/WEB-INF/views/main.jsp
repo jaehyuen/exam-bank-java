@@ -76,8 +76,6 @@
             data: data,
             success: function (result) {
 
-
-
                 $.each(result.resultData.reverse(), function (i, category) {
 
                     var str = ""
@@ -120,7 +118,7 @@
                 if (userSeq == 0) {
                     str += "<a href='/user/login' class='exam-start'>start</a>"
                 } else {
-                    str += "<a href='/question/start/" + categorySeq + "' class='exam-start'>start</a>"
+                    str += "<a href='/category/start/" + categorySeq + "' class='exam-start'>start</a>"
                 }
 
                 str += "</div>"

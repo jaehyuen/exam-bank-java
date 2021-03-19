@@ -60,7 +60,7 @@ public class QuestionService {
 
 			questionInfo.setQuestion(question);
 			questionInfo.setExampleList(exampleList);
-
+			
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -90,7 +90,7 @@ public class QuestionService {
 				}
 
 				questionInfo.setQuestion(question);
-				questionInfo.setExampleList(exampleList);
+				questionInfo.setExampleList(question.isQuestionType()? exampleList : null);
 				questionInfoList.add(questionInfo);
 
 			}

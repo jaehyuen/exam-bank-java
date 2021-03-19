@@ -79,8 +79,8 @@ public class QuestionController {
 	@RequestMapping(value = "/question/info/list", method = RequestMethod.GET)
 	public @ResponseBody ResultDto getQuestionInfoList(QuestionDto questionDto) {
 
-		logger.info("[getQuestionInfoList] start /question/info/list GET");
-		logger.info("[getQuestionInfoList] questionDto is : " + questionDto);
+		logger.debug("[getQuestionInfoList] start /question/info/list GET");
+		logger.debug("[getQuestionInfoList] questionDto is : " + questionDto);
 			
 		return questionService.getQuestionInfoList(questionDto);
 	}

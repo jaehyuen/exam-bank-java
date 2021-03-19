@@ -21,7 +21,7 @@ public class QuestionDao {
 	}
 
 	public QuestionDto selectQuestionInfo(QuestionDto questionDto) {
-		return sqlSession.selectOne("QuestionDto", questionDto);
+		return sqlSession.selectOne("selectQuestionInfo", questionDto);
 	}
 
 	public List<QuestionDto> selectQuestionInfoList(QuestionDto questionDto) {

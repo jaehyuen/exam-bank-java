@@ -1,30 +1,13 @@
-$(document).ready(function() {
-
-	$(".slide_div2").hide();
-	$("input[name=open]").change(function() {
-
-		var radioValue = $(this).val();
-
-		if (radioValue == "1") {
-
-			
-			$('#example').prop('required', true);
-			
-			$(".slide_div").show();
-			$(".slide_div2").hide();
-
-		} else if (radioValue == "2") {
-			
-			$('#example').prop('required', false);
-			$(".slide_div").hide();
-			$(".slide_div2").show();
-		}
-
-
-
-	});
-
-});
+function shuffleArray(array) {
+  for (let i = 0; i < array.length; i++) {
+    let j = Math.floor(Math.random() * (i + 1));
+    // [array[i], array[j]] = [array[j], array[i]];
+    const x = array[i];
+    array[i] = array[j];
+    array[j] = x;
+  }
+  return array;
+};
 
 function answer_check(a, b, c) {
 	if (a == b) {
