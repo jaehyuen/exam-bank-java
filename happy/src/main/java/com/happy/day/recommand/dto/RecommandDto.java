@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class RecommandDto {
 
+	private int recommandSeq;
 	private int questionSeq;
-	private int exampleSeq;
-	private String example;
+	private int userSeq;
 	
 }

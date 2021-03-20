@@ -11,21 +11,30 @@ import com.happy.day.util.Util;
 @Service
 public class RecommandService {
 
-
 	@Autowired
 	RecommandDao recommandDao;
 
 	Util util = new Util();
 
-	
-
 	public ResultDto createRecommand(RecommandDto recommandDto) {
 
+		try {
 
+			if (recommandDao.selectRecommand(recommandDto) == null) {
+				recommandDao.insertRecommand(recommandDto);
+			} else {
+				recommandDao.deleteRecommand(recommandDto);
+			}
 
-		return util.setResult("0000", true, "문제 생성 성공", "");
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+			return util.setResult("9999", false, "추천 실패", "");
+		}
+
+		return util.setResult("0000", true, "추천 성공", "");
 
 	}
 
-	
 }

@@ -16,5 +16,12 @@ public class RecommandDao {
 		sqlSession.insert("insertRecommand", recommandDto);
 	}
 
+	public RecommandDto selectRecommand(RecommandDto recommandDto) {
+		return sqlSession.selectOne("selectRecommand", recommandDto);
+	}
+
+	public void deleteRecommand(RecommandDto recommandDto) {
+		sqlSession.delete("deleteRecommand", recommandDto);
+	}
 
 }

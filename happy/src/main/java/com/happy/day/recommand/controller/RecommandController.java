@@ -10,9 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.happy.day.common.dto.ResultDto;
-import com.happy.day.question.dto.QuestionDto;
-import com.happy.day.question.dto.QuestionInfoDto;
-import com.happy.day.question.service.QuestionService;
+import com.happy.day.recommand.dto.RecommandDto;
+import com.happy.day.recommand.service.RecommandService;
 
 /**
  * Handles requests for the application home page.
@@ -21,16 +20,16 @@ import com.happy.day.question.service.QuestionService;
 public class RecommandController {
 
 	@Autowired
-	QuestionService questionService;
+	RecommandService recommandService;
 
 	private static final Logger logger = LoggerFactory.getLogger(RecommandController.class);
 
-	@RequestMapping(value = "/question/edit", method = RequestMethod.POST)
-	public @ResponseBody ResultDto editQuestion(@RequestBody QuestionInfoDto questionInfoDto) {
+	@RequestMapping(value = "/recommand", method = RequestMethod.POST)
+	public @ResponseBody ResultDto recommand(@RequestBody RecommandDto recommandDto) {
 
-		logger.debug("[getQuestionInfo] start /question/edit POST");
-		logger.debug("[getQuestionInfo] editQuestion is : " + questionInfoDto);
+		logger.info("[recommand] start /recommand POST");
+		logger.info("[recommand] recommandDto is : " + recommandDto);
 
-		return questionService.editQuestion(questionInfoDto);
+		return recommandService.createRecommand(recommandDto);
 	}
 }
