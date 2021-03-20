@@ -21,6 +21,8 @@
 <script>
 var userSeq
 var currentPage
+var questionInfoList
+
 $(function () {
 
     userSeq = '${userSeq}'
@@ -47,12 +49,8 @@ $(function () {
             data: data,
             success: function (result) {
 
-                var question = result.resultData;
-
-                var str = createHtml(result.resultData)
-
-                $("#main-div").html(str)
-
+                questionInfoList = result.resultData
+                createHtml()
 
             },
             error: function (xhr, resp, text) {
@@ -60,55 +58,75 @@ $(function () {
             }
         })
     }
+});
 
-    function createHtml(data) {
-        var result = ""
+function answerCheck(index, answer) {
 
-        var index = Math.floor(Math.random() * data.length);
-        var question = data[index].question;
-        var exampleList = data[index].exampleList
+    var question = questionInfoList[index].question;
 
-        result += "<h1 class='main-div-h1'>" + question.questionTitle + "</h1>"
-
-        if (question.questionType == true) {
-            var strArr = [];
-            $.each(exampleList, function (i, example) {
-                var exampleStr = ""
-                exampleStr += "<div class='main-div-input-answer-flex'>"
-                exampleStr += "<div onclick='answer_check()' class='main-div-answer'>" + example.example + "</div>"
-                exampleStr += "</div>"
-                strArr.push(exampleStr)
-            });
-            var answerStr = ""
-            answerStr += "<div class='main-div-input-answer-flex'>"
-            answerStr += "<div onclick='answer_check()' class='main-div-answer'>" + question.questionAnswer + "</div>"
-            answerStr += "</div>"
-            strArr.push(answerStr)
-
-            strArr = shuffleArray(strArr)
-            strArr.forEach((data) => {
-                result += data
-            })
-        }
-        else {
-
-            result += "<div class='main-div-input-answer-flex1'>"
-            result += "<div class='main-div-input-answer'>"
-            result += "<input type='text' name='myan' id='myan' class='main-div-input' placeholder='정답'>"
-            result += "</div>"
-            result += "</div>"
-            result += "<div class='main-div-input-answer-flex1'>"
-            result += "<div class='main-div-input-answer'>"
-            result += "<div onclick='answer_check()' class='main-div-input-button'>제출</div>"
-            result += "</div>"
-            result += "</div>"
-
-        }
-
-        return result;
+    if (question.questionType == false) {
+        answer = $('#answer').val()
+    }
+    if (answer == question.questionAnswer) {
+        alert('정답');
     }
 
-});
+    else {
+        alert('틀림');
+
+    }
+    createHtml()
+}
+
+function createHtml() {
+    var result = ""
+
+    var index = Math.floor(Math.random() * questionInfoList.length);
+    var question = questionInfoList[index].question;
+    var exampleList = questionInfoList[index].exampleList
+
+    result += "<h1 class='main-div-h1'>" + question.questionTitle + "</h1>"
+
+    if (question.questionType == true) {
+        var strArr = [];
+        $.each(exampleList, function (i, example) {
+            var exampleStr = ""
+            exampleStr += "<div class='main-div-input-answer-flex'>"
+            exampleStr += "<div onclick='answerCheck(" + index + ",\"" + example.example + "\")' class='main-div-answer'>" + example.example + "</div>"
+            exampleStr += "</div>"
+            strArr.push(exampleStr)
+        });
+        var answerStr = ""
+        answerStr += "<div class='main-div-input-answer-flex'>"
+        answerStr += "<div onclick='answerCheck(" + index + ",\"" + question.questionAnswer + "\")' class='main-div-answer'>" + question.questionAnswer + "</div>"
+        answerStr += "</div>"
+        strArr.push(answerStr)
+
+        strArr = shuffleArray(strArr)
+        strArr.forEach((data) => {
+            result += data
+        })
+    }
+    else {
+
+        result += "<div class='main-div-input-answer-flex1'>"
+        result += "<div class='main-div-input-answer'>"
+        result += "<input type='text' name='answer' id='answer' class='main-div-input' placeholder='정답'>"
+        result += "</div>"
+        result += "</div>"
+        result += "<div class='main-div-input-answer-flex1'>"
+        result += "<div class='main-div-input-answer'>"
+        result += "<div onclick='answerCheck(" + index + ",null)' class='main-div-input-button'>제출</div>"
+        result += "</div>"
+        result += "</div>"
+
+    }
+
+    console.log(result)
+    $("#main-div").html(result)
+}
+
+
 function shuffleArray(array) {
     for (let i = 0; i < array.length; i++) {
         let j = Math.floor(Math.random() * (i + 1));
@@ -118,6 +136,8 @@ function shuffleArray(array) {
     }
     return array;
 };
+
+
 </script>
 
 </head>
