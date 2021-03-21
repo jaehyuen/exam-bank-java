@@ -6,12 +6,20 @@
 	<select id="selectUser"
 		parameterType="com.happy.day.user.dto.UserDto"
 		resultType="com.happy.day.user.dto.UserDto">
-		SELECT * FROM user WHERE USER_ID=#{userId}
+		SELECT *
+		FROM   USER
+		WHERE  USER_ID = #{userId}
 	</select>
 
 	<insert id="insertUser"
 		parameterType="com.happy.day.user.dto.UserDto">
-		INSERT INTO user (USER_ID, USER_PASSWORD, USER_NAME) VALUES (#{userId}, #{userPassword}, #{userName})
+		INSERT INTO USER
+		            (USER_ID,
+		             USER_PASSWORD,
+		             USER_NAME)
+		VALUES      ( #{userId},
+		              #{userPassword},
+		              #{userName}) 
 	</insert>
 
 </mapper>

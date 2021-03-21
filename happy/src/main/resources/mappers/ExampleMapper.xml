@@ -6,30 +6,27 @@
 
 	<insert id="insertExample" parameterType="exampleDto">
 		INSERT INTO example
-		(
-		EXAMPLE,
-		QUESTION_SEQ
-		) VALUES
-		(
-		#{example},
-		#{questionSeq}
-		)
+		            (EXAMPLE,
+		             QUESTION_SEQ)
+		VALUES      ( #{example},
+		              #{questionSeq} 
 	</insert>
 
 	<select id="selectExampleList" parameterType="int" resultType="exampleDto">
-		select
-		* FROM
-		example
-		WHERE QUESTION_SEQ=#{questionSeq};
+		SELECT *
+		FROM   example
+		WHERE  QUESTION_SEQ = #{questionSeq}; 
 	</select>
 
 	<update id="updateExample" parameterType="exampleDto">
-		UPDATE
-		example SET
-		example=#{example} where EXAMPLE_SEQ=#{exampleSeq}
+		UPDATE example
+		SET    EXAMPLE = #{example}
+		WHERE  EXAMPLE_SEQ = #{exampleSeq} 
 	</update>
+	
 	<delete id="deleteExample" parameterType="int">
-		delete from example where EXAMPLE_SEQ=#{exampleSeq}
+		DELETE FROM example
+		WHERE  EXAMPLE_SEQ = #{exampleSeq} 
 	</delete>
 
 </mapper>

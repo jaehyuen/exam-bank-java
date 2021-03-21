@@ -6,17 +6,23 @@
 
 	<insert id="insertRecommand" parameterType="recommandDto">
 		INSERT INTO recommand
-		(QUESTION_SEQ, USER_SEQ) VALUES (#{questionSeq}, #{userSeq})
+		            (QUESTION_SEQ,
+		             USER_SEQ)
+		VALUES      ( #{questionSeq},
+		              #{userSeq}) 
 	</insert>
 	<select id="selectRecommand" parameterType="recommandDto"
 		resultType="recommandDto">
-		SELECT * FROM recommand WHERE QUESTION_SEQ = #{questionSeq}
-		AND USER_SEQ = #{userSeq}
+		SELECT *
+		FROM   recommand
+		WHERE  QUESTION_SEQ = #{questionSeq}
+		       AND USER_SEQ = #{userSeq} 
 	</select>
 	
 	<delete id="deleteRecommand"  parameterType="recommandDto">
-		DELETE FROM recommand WHERE QUESTION_SEQ = #{questionSeq}
-		AND USER_SEQ = #{userSeq}
+		DELETE FROM recommand
+		WHERE  QUESTION_SEQ = #{questionSeq}
+		       AND USER_SEQ = #{userSeq} 
 	</delete>
 
 </mapper>

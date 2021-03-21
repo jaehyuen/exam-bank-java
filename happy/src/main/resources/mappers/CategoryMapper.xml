@@ -5,40 +5,55 @@
 
 	<select id="selectCategory" parameterType="categoryDto"
 		resultType="categoryDto">
-		SELECT * FROM category WHERE CATEGORY_SEQ=#{categorySeq}
+		SELECT *
+		FROM   category
+		WHERE  CATEGORY_SEQ = #{categorySeq}
 	</select>
 
 	<select id="selectCategoryDup" parameterType="categoryDto"
 		resultType="categoryDto">
-		SELECT * FROM category WHERE (CATEGORY_FLAG=true AND
-		CATEGORY_NAME=#{categoryName}) OR (CATEGORY_FLAG=false AND
-		AUTHOR_SEQ=#{authorSeq} AND CATEGORY_NAME=#{categoryName})
+		SELECT *
+		FROM   category
+		WHERE  ( CATEGORY_FLAG = TRUE
+		         AND CATEGORY_NAME = #{categoryName} )
+		        OR ( CATEGORY_FLAG = FALSE
+		             AND AUTHOR_SEQ = #{authorSeq}
+		             AND CATEGORY_NAME = #{categoryName} )
 	</select>
 
 	<select id="selectCategoryList" parameterType="categoryDto"
 		resultType="categoryDto">
-		SELECT * FROM category WHERE CATEGORY_FLAG=true OR
-		(CATEGORY_FLAG=false AND AUTHOR_SEQ=#{authorSeq})
+		SELECT *
+		FROM   category
+		WHERE  CATEGORY_FLAG = TRUE
+		        OR ( CATEGORY_FLAG = FALSE
+		             AND AUTHOR_SEQ = #{authorSeq} )
 	</select>
 
 	<select id="selectCategoryListByPage" parameterType="categoryDto"
 		resultType="categoryDto">
-		SELECT * FROM category WHERE CATEGORY_FLAG=true OR
-		(CATEGORY_FLAG=false AND AUTHOR_SEQ=#{authorSeq}) LIMIT #{page},7
+		SELECT *
+		FROM   category
+		WHERE  category_flag=true
+		OR     (category_flag=false AND author_seq=#{authorseq})
+		LIMIT  #{page},7
 	</select>
-
 
 	<insert id="insertCategory" parameterType="categoryDto">
 		INSERT INTO category
-		(CATEGORY_NAME, CATEGORY_FLAG,
-		AUTHOR_SEQ) VALUES (#{categoryName},
-		#{categoryFlag}, #{authorSeq})
+		            (CATEGORY_NAME,
+		             CATEGORY_FLAG,
+		             AUTHOR_SEQ)
+		VALUES      (#{categoryName},
+		              #{categoryFlag},
+		              #{authorSeq}) 
 	</insert>
 
 	<update id="updateCategory" parameterType="categoryDto">
-		UPDATE category SET
-		CATEGORY_NAME=#{categoryName}, CATEGORY_FLAG=#{categoryFlag} WHERE
-		CATEGORY_SEQ=#{categorySeq}
+		UPDATE category
+		SET    CATEGORY_NAME = #{categoryName},
+		       CATEGORY_FLAG = #{categoryFlag}
+		WHERE  CATEGORY_SEQ = #{categorySeq} 
 	</update>
 
 </mapper>
