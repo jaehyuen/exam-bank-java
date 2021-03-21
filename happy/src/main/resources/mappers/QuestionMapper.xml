@@ -5,55 +5,55 @@
 
 	<select id="selectQuestionList" parameterType="questionDto"
 		resultType="questionListDto">
-		select
-		a.QUESTION_SEQ,
-		a.QUESTION_TITLE,
-		b.USER_NAME AS
-		AUTHOR_NAME,
-		c.AUTHOR_SEQ as CATEGORY_AUTHOR_SEQ
-		from question AS a
-		JOIN
-		user AS b
-		ON a.AUTHOR_SEQ=b.USER_SEQ AND a.CATEGORY_SEQ=#{categorySeq}
-		JOIN category as c
-		ON a.CATEGORY_SEQ=c.CATEGORY_SEQ;
+		SELECT   a.question_seq,
+		         a.question_title,
+		         b.user_name  AS author_name,
+		         c.author_seq AS category_author_seq,
+		         count(CASE WHEN d.question_seq=a.question_seq THEN 1 end) AS recommand_cnt
+		FROM     question AS a
+		JOIN     user    AS b
+		ON       a.author_seq = b.user_seq
+		AND      a.category_seq = #{categorySeq}
+		JOIN     category AS c
+		ON       a.category_seq = c.category_seq
+		JOIN     recommand AS d
+		group BY a.question_seq;
 	</select>
 
 	<select id="selectQuestionInfoList" parameterType="questionDto"
 		resultType="questionDto">
-		select * from question where CATEGORY_SEQ=#{categorySeq}
+		SELECT *
+		FROM  question
+		WHERE CATEGORY_SEQ = #{categorySeq}
 	</select>
 
 	<select id="selectQuestionInfo" parameterType="questionDto"
 		resultType="questionDto">
-		select * from question where QUESTION_SEQ=#{questionSeq}
+		SELECT *
+		FROM  question
+		WHERE QUESTION_SEQ = #{questionSeq} 
 	</select>
 
 	<insert id="insertQuestion" parameterType="questionDto"
 		useGeneratedKeys="true" keyProperty="questionSeq">
 		INSERT INTO question
-		(
-		QUESTION_TITLE,
-		QUESTION_TYPE,
-		QUESTION_ANSWER,
-		AUTHOR_SEQ,
-		CATEGORY_SEQ
-		)
-		VALUES
-		(
-		#{questionTitle},
-		#{questionType},
-		#{questionAnswer},
-		#{authorSeq},
-		#{categorySeq}
-		)
+					(QUESTION_TITLE,
+					QUESTION_TYPE,
+					QUESTION_ANSWER,
+					AUTHOR_SEQ,
+					CATEGORY_SEQ)
+		VALUES 		(#{questionTitle},
+					#{questionType},
+					#{questionAnswer},
+					#{authorSeq},
+					#{categorySeq})
 	</insert>
 	<update id="updateQuestion" parameterType="questionDto">
-		UPDATE
-		question SET
-		QUESTION_TITLE=#{questionTitle},
-		QUESTION_TYPE=#{questionType},
-		QUESTION_ANSWER=#{questionAnswer} where QUESTION_SEQ=#{questionSeq}
+		UPDATE question
+		SET    QUESTION_TITLE = #{questionTitle},
+		 	   QUESTION_TYPE = #{questionType},
+			   QUESTION_ANSWER = #{questionAnswer}
+		WHERE  QUESTION_SEQ = #{questionSeq}
 	</update>
 
 </mapper>

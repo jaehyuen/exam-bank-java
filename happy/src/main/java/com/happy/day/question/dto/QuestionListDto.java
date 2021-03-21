@@ -9,5 +9,5 @@ public class QuestionListDto {
 	private String questionTitle;
 	private String authorName;
 	private int categoryAuthorSeq;
-	
+	private int recommandCnt;
 }

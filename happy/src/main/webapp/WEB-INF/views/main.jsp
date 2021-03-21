@@ -146,7 +146,7 @@ var categorySeq
 
 	                str += "<div class='input-div-flex'>"
 	                str += "<a href='/question/" + question.questionSeq + "' class='main-exam'>"
-	                str += "<div class='main-exam-div1'>" + question.questionTitle
+	                str += "<div class='main-exam-div1'>" + question.questionTitle + "["+question.recommandCnt+"]"
 	                str += "</div>"
 	                str += "<div class='main-exam-div2'>"
 	                str += "<div>by " + question.authorName
