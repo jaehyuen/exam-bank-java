@@ -34,8 +34,8 @@
 		resultType="categoryDto">
 		SELECT *
 		FROM   category
-		WHERE  category_flag=true
-		OR     (category_flag=false AND author_seq=#{authorseq})
+		WHERE  CATEGORY_FLAG=true
+		OR     (CATEGORY_FLAG=false AND AUTHOR_SEQ=#{authorSeq})
 		LIMIT  #{page},7
 	</select>
 

@@ -7,13 +7,13 @@
 		parameterType="com.happy.day.user.dto.UserDto"
 		resultType="com.happy.day.user.dto.UserDto">
 		SELECT *
-		FROM   USER
+		FROM   user
 		WHERE  USER_ID = #{userId}
 	</select>
 
 	<insert id="insertUser"
 		parameterType="com.happy.day.user.dto.UserDto">
-		INSERT INTO USER
+		INSERT INTO user
 		            (USER_ID,
 		             USER_PASSWORD,
 		             USER_NAME)
