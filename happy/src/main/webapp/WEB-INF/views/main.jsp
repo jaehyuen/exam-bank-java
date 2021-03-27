@@ -102,7 +102,8 @@ var categorySeq
 	function getQuestionList(userSeq, categorySeq) {
 
 	    var data = {
-	        "categorySeq": categorySeq
+	        "categorySeq": categorySeq,
+	        "userSeq":userSeq
 	    }
 
 	    $.ajax({

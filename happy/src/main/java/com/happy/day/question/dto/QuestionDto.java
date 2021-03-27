@@ -11,5 +11,6 @@ public class QuestionDto {
 	private String questionAnswer;
 	private int authorSeq;
 	private int categorySeq;
+	private int userSeq; //현재는 테스트 용도
 	
 }

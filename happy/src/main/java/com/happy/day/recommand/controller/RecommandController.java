@@ -27,8 +27,8 @@ public class RecommandController {
 	@RequestMapping(value = "/recommand", method = RequestMethod.POST)
 	public @ResponseBody ResultDto recommand(@RequestBody RecommandDto recommandDto) {
 
-		logger.info("[recommand] start /recommand POST");
-		logger.info("[recommand] recommandDto is : " + recommandDto);
+		logger.debug("[recommand] start /recommand POST");
+		logger.debug("[recommand] recommandDto is : " + recommandDto);
 
 		return recommandService.createRecommand(recommandDto);
 	}

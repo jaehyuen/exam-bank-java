@@ -10,4 +10,5 @@ public class QuestionListDto {
 	private String authorName;
 	private int categoryAuthorSeq;
 	private int recommandCnt;
+	private boolean recommandYn;
 }

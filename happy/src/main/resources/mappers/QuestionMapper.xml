@@ -4,20 +4,24 @@
 <mapper namespace="com.happy.day.resources.mappers.QuestionMapper">
 
 	<select id="selectQuestionList" parameterType="questionDto"
-		resultType="questionListDto">
-		SELECT   a.question_seq,
-		         a.question_title,
-		         b.user_name  AS author_name,
-		         c.author_seq AS category_author_seq,
-		         count(CASE WHEN d.question_seq=a.question_seq THEN 1 end) AS recommand_cnt
-		FROM     question AS a
-		JOIN     user    AS b
-		ON       a.author_seq = b.user_seq
-		AND      a.category_seq = #{categorySeq}
-		JOIN     category AS c
-		ON       a.category_seq = c.category_seq
-		JOIN     recommand AS d
-		group BY a.question_seq;
+		resultType="questionListDto">	
+		SELECT a.QUESTION_SEQ,
+		       a.QUESTION_TITLE,
+		       b.USER_NAME                            AS author_name,
+		       c.AUTHOR_SEQ                           AS category_author_seq,
+		       (SELECT Count(*)
+		        FROM   recommand
+		        WHERE  QUESTION_SEQ = a.QUESTION_SEQ) AS recommand_cnt,
+		       (SELECT EXISTS (SELECT *
+		                       FROM   recommand r
+		                       WHERE  r.QUESTION_SEQ = a.QUESTION_SEQ
+		                              AND r.USER_SEQ = #{userSeq})) AS recommand_yn
+		FROM   question AS a
+		       JOIN user AS b
+		         ON a.AUTHOR_SEQ = b.USER_SEQ
+		            AND a.CATEGORY_SEQ = #{categorySeq}
+		       JOIN category AS c
+		         ON a.CATEGORY_SEQ = c.CATEGORY_SEQ; 
 	</select>
 
 	<select id="selectQuestionInfoList" parameterType="questionDto"
