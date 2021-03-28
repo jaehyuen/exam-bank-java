@@ -19,8 +19,8 @@
 
 <script>
 var userSeq = '${userSeq}'
-var currentPage = '${currentPage}'
-var categorySeq
+	var currentPage = '${currentPage}'
+	var categorySeq
 
 	$(function () {
 
@@ -103,7 +103,7 @@ var categorySeq
 
 	    var data = {
 	        "categorySeq": categorySeq,
-	        "userSeq":userSeq
+	        "userSeq": userSeq
 	    }
 
 	    $.ajax({
@@ -147,19 +147,24 @@ var categorySeq
 
 	                str += "<div class='input-div-flex'>"
 	                str += "<a href='/question/" + question.questionSeq + "' class='main-exam'>"
-	                str += "<div class='main-exam-div1'>" + question.questionTitle + "["+question.recommandCnt+"]"
+	                str += "<div class='main-exam-div1'>" + question.questionTitle + "[" + question.recommandCnt + "]"
 	                str += "</div>"
 	                str += "<div class='main-exam-div2'>"
 	                str += "<div>by " + question.authorName
 	                str += "</div>"
 	                str += "</div>"
-	            	    if (userSeq == 0) {
-	            	    	 str += "<a class='input-sym' onclick='recommand(" + question.questionSeq + ",null)' href='#'>"
-	            	    } else {
-	            	    	 str += "<a class='input-sym' onclick='recommand(" + question.questionSeq + "," + userSeq + ")' href='#'>"
-	            	    }
-	               
-	                str += "<i class='far fa-heart'>"
+	                if (userSeq == 0) {
+	                    str += "<a class='input-sym' onclick='recommand(" + question.questionSeq + ",null)' href='#'>"
+	                } else {
+	                    str += "<a class='input-sym' onclick='recommand(" + question.questionSeq + "," + userSeq + ")' href='#'>"
+	                }
+
+	                if (question.recommandYn == true) {
+	                    str += "<i class='fas fa-heart'>"
+	                } else {
+	                    str += "<i class='far fa-heart'>"
+	                }
+
 	                str += "</a>"
 	                str += "</a>"
 	                str += "</div>"
@@ -170,7 +175,7 @@ var categorySeq
 	        },
 	        error: function (xhr, resp, text) {
 	            console.log(xhr, resp, text);
-	           
+
 	        }
 	    })
 
@@ -178,28 +183,28 @@ var categorySeq
 
 	function recommand(questionSeq, userSeq) {
 	    console.log(questionSeq + " : " + userSeq);
-	    
-	    var data ={
-	    		"questionSeq":questionSeq,
-	    		"userSeq":userSeq
+
+	    var data = {
+	        "questionSeq": questionSeq,
+	        "userSeq": userSeq
 	    }
-	    
-	    
+
+
 	    $.ajax({
 	        url: "/recommand",
 	        type: "POST",
-			contentType: 'application/json',
-			dataType : 'json',
-			data : JSON.stringify(data),
+	        contentType: 'application/json',
+	        dataType: 'json',
+	        data: JSON.stringify(data),
 	        success: function (result) {
-	        	location.reload()
+	            location.reload()
 	        },
 	        error: function (xhr, resp, text) {
 	            console.log(xhr, resp, text);
 	        }
 	    })
-	    
-	    
+
+
 	}
 </script>
 
