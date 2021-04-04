@@ -5,46 +5,62 @@
 
 <html>
 <head>
-    <title>exambank</title>
-    <link rel="stylesheet" type="text/css" href="/css/mainstyle1.css">
-    <link rel="stylesheet" type="text/css" href="/css/userstyle.css">
-    <link rel="stylesheet" type="text/css" href="/css/input.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<title>exambank</title>
+<link rel="stylesheet" type="text/css" href="/css/mainstyle1.css">
+<link rel="stylesheet" type="text/css" href="/css/userstyle.css">
+<link rel="stylesheet" type="text/css" href="/css/input.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
-    <script>
-        function login() {
+<script type="text/javascript" src="/js/common.js"></script>
 
-            var data = {
-                "userId": $('#userId').val(),
-                "userPassword": $('#userPassword').val(),
-            }
+<script>
+function login() {
 
-            $.ajax({
-                url: "login",
-                type: "POST",
-                dataType: 'json',
-                data: data,
-                success: function (result) {
+    var data = {
+        "userId": $('#userId').val(),
+        "userPassword": $('#userPassword').val(),
+    }
 
-                    if (result.resultFlag) {
+    var resultDto = callPost("/user/login", data)
 
-                        location.href = "/main"
+    if (resultDto.resultFlag) {
 
-                    } else {
+        location.href = "/main"
 
-                        alert("아이디 또는 패스워드를 확인해주세요")
-                        $('#userId').val('')
-                        $('#userPassword').val('')
+    } else {
 
-                    }
+        alert("아이디 또는 패스워드를 확인해주세요")
+        $('#userId').val('')
+        $('#userPassword').val('')
 
-                },
-                error: function (xhr, resp, text) {
-                    console.log(xhr, resp, text);
-                }
-            })
-        }
-    </script>
+    }
+
+    // $.ajax({
+    //     url: "login",
+    //     type: "POST",
+    //     dataType: 'json',
+    //     data: data,
+    //     success: function (result) {
+
+    //         if (result.resultFlag) {
+
+    //             location.href = "/main"
+
+    //         } else {
+
+    //             alert("아이디 또는 패스워드를 확인해주세요")
+    //             $('#userId').val('')
+    //             $('#userPassword').val('')
+
+    //         }
+
+    //     },
+    //     error: function (xhr, resp, text) {
+    //         console.log(xhr, resp, text);
+    //     }
+    // })
+}
+</script>
 </head>
 
 <body>

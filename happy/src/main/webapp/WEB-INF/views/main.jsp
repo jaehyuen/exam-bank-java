@@ -18,6 +18,8 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="/css/slide.js"></script>
 
+<script type="text/javascript" src="/js/common.js"></script>
+
 <script>
 var userSeq = '${userSeq}'
 	var currentPage = '${currentPage}'
@@ -25,18 +27,55 @@ var userSeq = '${userSeq}'
 
 	$(function () {
 
-	    getCategoryList(userSeq, currentPage)
+	    getCategoryList()
 
 	    categorySeq = location.pathname.replace("/main", "").replace("/", "");
 
 	    if (categorySeq != "") {
 
-	        getQuestionList(userSeq, categorySeq)
+	        getQuestionList()
 
 	    }
 	});
 
-	function addQuestionDiv(userSeq, categorySeq) {
+	function getCategoryList() {
+
+	    var data = {
+	        "authorSeq": userSeq == "" ? 0 : userSeq,
+	        "page": currentPage == "" ? 1 : currentPage
+
+	    }
+
+	    var resultData = callGet("/category/listPage", data).resultData
+
+	    $.each(resultData.reverse(), function (i, category) {
+
+	        var str = ""
+
+	        str += "<div class='main-div-cate'>"
+	        str += "<a href='/main/" + category.categorySeq + "?page="
+	            + currentPage + "'"
+	        str += "class='body-div-main-div1-a'>"
+	            + category.categoryName + "</a>"
+	        if (!category.categoryFlag) {
+	            str += "&nbsp <i class='fas fa-lock'>"
+
+	        }
+
+	        str += "</div>"
+	        $("#main-div1").prepend(str)
+
+	    });
+	}
+
+	function getQuestionList() {
+
+	    var data = {
+	        "categorySeq": categorySeq,
+	        "userSeq": userSeq == "" ? 0 : userSeq
+	    }
+
+	    var resultData = callGet("/question/list", data).resultData
 
 	    var str = ""
 
@@ -44,7 +83,7 @@ var userSeq = '${userSeq}'
 	    if (userSeq == 0) {
 	        str += "<a href='/user/login' class='exam-start'>start</a>"
 	    } else {
-	        str += "<a href='/question/start/" + categorySeq + "' class='exam-start'>start</a>"
+	        str += "<a href='/category/start/" + categorySeq + "' class='exam-start'>start</a>"
 	    }
 
 	    str += "</div>"
@@ -53,160 +92,69 @@ var userSeq = '${userSeq}'
 	        str += "<a href='/user/login' class='tool-exam1'>문제만들기</a>"
 	    } else {
 	        str += "<a href='/question/create/" + categorySeq + "' class='tool-exam1'>문제만들기</a>"
+	        if (resultData.length > 0) {
+	            if (resultData[0].categoryAuthorSeq == userSeq) {
+
+	                str += "</div>"
+	                str += "<div class='tool-exam1-div2'>"
+	                str += "<a href='/category/edit/" + categorySeq + "' class='tool-exam1'>카테고리 수정</a>"
+	            }
+	        }
+
 	    }
 
 	    str += "</div>"
 	    $("#tool-exam").html(str)
 
-	}
+	    $.each(resultData.reverse(), function (i, question) {
+	        var str = ""
 
-	function getCategoryList(authorSeq, currentPage) {
-
-	    var data = {
-	        "authorSeq": authorSeq == "" ? 0 : authorSeq,
-	        "page": currentPage == "" ? 1 : currentPage
-
-	    }
-
-	    $.ajax({
-	        url: "/category/listPage",
-	        type: "GET",
-	        dataType: 'json',
-	        data: data,
-	        success: function (result) {
-
-	            $.each(result.resultData.reverse(), function (i, category) {
-
-	                var str = ""
-
-	                str += "<div class='main-div-cate'>"
-	                str += "<a href='/main/" + category.categorySeq + "?page="
-	                    + currentPage + "'"
-	                str += "class='body-div-main-div1-a'>"
-	                    + category.categoryName + "</a>"
-	                if (!category.categoryFlag) {
-	                    str += "&nbsp <i class='fas fa-lock'>"
-
-	                }
-
-	                str += "</div>"
-	                $("#main-div1").prepend(str)
-
-	            });
-	        },
-	        error: function (xhr, resp, text) {
-	            console.log(xhr, resp, text);
+	        str += "<div class='input-div-flex'>"
+	        str += "<a href='/question/" + question.questionSeq + "' class='main-exam'>"
+	        str += "<div class='main-exam-div1'>" + question.questionTitle + "[" + question.recommandCnt + "]"
+	        str += "</div>"
+	        str += "<div class='main-exam-div2'>"
+	        str += "<div>by " + question.authorName
+	        str += "</div>"
+	        str += "</div>"
+	        if (userSeq == 0) {
+	            str += "<a class='input-sym' onclick='recommand(" + question.questionSeq + ",null)' href='#'>"
+	        } else {
+	            str += "<a class='input-sym' onclick='recommand(" + question.questionSeq + "," + userSeq + ")' href='#'>"
 	        }
-	    })
-	}
 
-	function getQuestionList(userSeq, categorySeq) {
-
-	    var data = {
-	        "categorySeq": categorySeq,
-	        "userSeq": userSeq
-	    }
-
-	    $.ajax({
-	        url: "/question/list",
-	        type: "GET",
-	        dataType: 'json',
-	        data: data,
-	        success: function (result) {
-
-	            var str = ""
-
-	            str += "<div class='exam-start-div'>"
-	            if (userSeq == 0) {
-	                str += "<a href='/user/login' class='exam-start'>start</a>"
-	            } else {
-	                str += "<a href='/category/start/" + categorySeq + "' class='exam-start'>start</a>"
-	            }
-
-	            str += "</div>"
-	            str += "<div class='tool-exam1-div1'>"
-	            if (userSeq == 0) {
-	                str += "<a href='/user/login' class='tool-exam1'>문제만들기</a>"
-	            } else {
-	                str += "<a href='/question/create/" + categorySeq + "' class='tool-exam1'>문제만들기</a>"
-	                if (result.resultData.length > 0) {
-	                    if (result.resultData[0].categoryAuthorSeq == userSeq) {
-
-	                        str += "</div>"
-	                        str += "<div class='tool-exam1-div2'>"
-	                        str += "<a href='/category/edit/" + categorySeq + "' class='tool-exam1'>카테고리 수정</a>"
-	                    }
-	                }
-
-	            }
-
-	            str += "</div>"
-	            $("#tool-exam").html(str)
-
-	            $.each(result.resultData.reverse(), function (i, question) {
-	                var str = ""
-
-	                str += "<div class='input-div-flex'>"
-	                str += "<a href='/question/" + question.questionSeq + "' class='main-exam'>"
-	                str += "<div class='main-exam-div1'>" + question.questionTitle + "[" + question.recommandCnt + "]"
-	                str += "</div>"
-	                str += "<div class='main-exam-div2'>"
-	                str += "<div>by " + question.authorName
-	                str += "</div>"
-	                str += "</div>"
-	                if (userSeq == 0) {
-	                    str += "<a class='input-sym' onclick='recommand(" + question.questionSeq + ",null)' href='#'>"
-	                } else {
-	                    str += "<a class='input-sym' onclick='recommand(" + question.questionSeq + "," + userSeq + ")' href='#'>"
-	                }
-
-	                if (question.recommandYn == true) {
-	                    str += "<i class='fas fa-heart'>"
-	                } else {
-	                    str += "<i class='far fa-heart'>"
-	                }
-
-	                str += "</a>"
-	                str += "</a>"
-	                str += "</div>"
-
-	                $("#main-div2").prepend(str)
-	            });
-
-	        },
-	        error: function (xhr, resp, text) {
-	            console.log(xhr, resp, text);
-
+	        if (question.recommandYn == true) {
+	            str += "<i class='fas fa-heart'>"
+	        } else {
+	            str += "<i class='far fa-heart'>"
 	        }
-	    })
 
+	        str += "</a>"
+	        str += "</a>"
+	        str += "</div>"
+
+	        $("#main-div2").prepend(str)
+	    });
 	}
 
 	function recommand(questionSeq, userSeq) {
-	    console.log(questionSeq + " : " + userSeq);
+
+	    if (userSeq == null) {
+	        location.href = "/user/login"
+	    }
 
 	    var data = {
 	        "questionSeq": questionSeq,
 	        "userSeq": userSeq
 	    }
 
+	    var resultDto = callPost("/recommand", data)
 
-	    $.ajax({
-	        url: "/recommand",
-	        type: "POST",
-	        contentType: 'application/json',
-	        dataType: 'json',
-	        data: JSON.stringify(data),
-	        success: function (result) {
-	            location.reload()
-	        },
-	        error: function (xhr, resp, text) {
-	            console.log(xhr, resp, text);
-	        }
-	    })
-
-
+	    if(resultDto.resultFlag == true){
+	        location.reload()
+	    }
 	}
+
 </script>
 
 </head>
