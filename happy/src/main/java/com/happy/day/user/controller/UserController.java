@@ -63,7 +63,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/user/join", method = RequestMethod.POST)
-	public @ResponseBody ResultDto join(@ModelAttribute UserDto userDto) {
+	public @ResponseBody ResultDto join(@RequestBody UserDto userDto) {
 		
 		logger.debug("[join] start /user/join post");
 		logger.debug("[join] userDto is : " + userDto);
@@ -72,7 +72,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/user/check", method = RequestMethod.POST)
-	public @ResponseBody ResultDto duplicateCheck(@ModelAttribute UserDto userDto) {
+	public @ResponseBody ResultDto duplicateCheck(@RequestBody UserDto userDto) {
 		
 		logger.debug("[duplicateCheck] start /user/check post");
 		logger.debug("[duplicateCheck] userDto is : " + userDto);

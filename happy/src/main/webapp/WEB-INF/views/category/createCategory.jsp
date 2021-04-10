@@ -1,14 +1,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@include file="../header.jsp"%>
-<%
-if (userId == null) {
-	response.sendRedirect("/user/login");
-}
-%>
 <html>
 <head>
+<%@include file="../header.jsp"%>
+<%
+	if (userId == null) {
+		response.sendRedirect("/user/login");
+	}
+%>
 <title>exambank</title>
 <link rel="stylesheet" type="text/css" href="/css/mainstyle1.css">
 <link rel="stylesheet" type="text/css" href="/css/userstyle.css">
@@ -19,48 +19,35 @@ if (userId == null) {
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 <script>
-	function createCategory() {
+function createCategory() {
 
-		var categoryFlag = $(':radio[name="categoryFlag"]:checked').val();
+    var categoryFlag = $(':radio[name="categoryFlag"]:checked').val();
 
-		var categoryName = document.getElementById("categoryName")
+    var categoryName = document.getElementById("categoryName")
 
-		var userSeq = '${userSeq}'
+    var userSeq = '${userSeq}'
 
-		var data = {
-			"categoryName" : categoryName.value,
-			"categoryFlag" : categoryFlag,
-			"authorSeq" : userSeq
-		}
+    var data = {
+        "categoryName": categoryName.value,
+        "categoryFlag": categoryFlag,
+        "authorSeq": userSeq
+    }
 
-		console.log(data);
+    console.log(data);
 
+    var resultDto = callPost("/category/create", data)
 
-		$.ajax({
-			url : "create",
-			type : "POST",
-			dataType : 'json',
-			data : data,
-			success : function(result) {
+    alert(resultDto.resultMessage)
 
-				alert(result.resultMessage)
+    if (resultDto.resultFlag) {
+        location.href = "/main"
 
-				if (result.resultFlag) {
-					location.href = "/main"
+    } else {
 
-				} else {
+        categoryName.value = ""
 
-					categoryName.value = ""
-
-				}
-
-			},
-			error : function(xhr, resp, text) {
-				console.log(xhr, resp, text);
-			}
-		})
-
-	}
+    }
+}
 </script>
 
 </head>

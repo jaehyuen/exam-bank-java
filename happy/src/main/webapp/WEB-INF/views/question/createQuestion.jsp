@@ -1,15 +1,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<html>
+<head>
 <%@include file="../header.jsp"%>
 <%
 	if (userId == null) {
 		response.sendRedirect("/user/login");
 	}
 %>
-<html>
-
-<head>
 <title>exambank</title>
 <link rel="stylesheet" type="text/css" href="/css/mainstyle1.css">
 <link rel="stylesheet" type="text/css" href="/css/mainstyle.css">

@@ -1,14 +1,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@include file="../header.jsp"%>
-<%
-if (userId == null) {
-	response.sendRedirect("/user/login");
-}
-%>
 <html>
 <head>
+<%@include file="../header.jsp"%>
+<%
+	if (userId == null) {
+		response.sendRedirect("/user/login");
+	}
+%>
 <title>exambank</title>
 <link rel="stylesheet" type="text/css" href="/css/mainstyle1.css">
 <link rel="stylesheet" type="text/css" href="/css/userstyle.css">
@@ -20,11 +20,15 @@ if (userId == null) {
 
 <script>
 
+var userSeq
+var currentPage
+var categorySeq
+
 $(function () {
 
-    var userSeq = '${userSeq}'
-    var currentPage = '${currentPage}'
-    var categorySeq = location.pathname.replace("/category/edit", "").replace("/", "");
+    userSeq = '${userSeq}'
+    currentPage = '${currentPage}'
+    categorySeq = location.pathname.replace("/category/edit", "").replace("/", "");
     getCategoryInfo(userSeq, categorySeq)
 
 });
@@ -45,64 +49,39 @@ function editCategory() {
     }
 
     console.log(data);
+    var resultDto = callPost("/category/edit", data)
 
+    alert(resultDto.resultMessage)
 
-    $.ajax({
-        url: "/category/edit",
-        type: "POST",
-        contentType: 'application/json',
-        dataType: 'json',
-        data: JSON.stringify(data),
-        success: function (result) {
+    if (resultDto.resultFlag) {
+        location.href = "/main"
 
-            alert(result.resultMessage)
+    } else {
 
-            if (result.resultFlag) {
-                location.href = "/main"
+        categoryName.value = ""
 
-            } else {
-
-                categoryName.value = ""
-
-            }
-
-        },
-        error: function (xhr, resp, text) {
-            console.log(xhr, resp, text);
-        }
-    })
-
+    }
 }
 
-function getCategoryInfo(authorSeq, categorySeq) {
+function getCategoryInfo() {
 
     var data = {
         "categorySeq": categorySeq
     }
 
-    $.ajax({
-        url: "/category/info",
-        type: "GET",
-        dataType: 'json',
-        data: data,
-        success: function (result) {
+    var resultDto = callGet("/category/info", data)
 
-            console.log(result.resultData)
-            $('#categoryName').val(result.resultData.categoryName)
+    console.log(resultDto.resultData)
+    $('#categoryName').val(resultDto.resultData.categoryName)
 
-            if (result.resultData.categoryFlag) {
+    if (resultDto.resultData.categoryFlag) {
 
-                $('#categoryFlag1').prop('checked', true);
-                $('#categoryFlag2').prop('checked', false);
-            } else {
-                $('#categoryFlag1').prop('checked', false);
-                $('#categoryFlag2').prop('checked', true);
-            }
-        },
-        error: function (xhr, resp, text) {
-            console.log(xhr, resp, text);
-        }
-    })
+        $('#categoryFlag1').prop('checked', true);
+        $('#categoryFlag2').prop('checked', false);
+    } else {
+        $('#categoryFlag1').prop('checked', false);
+        $('#categoryFlag2').prop('checked', true);
+    }
 } 
 </script>
 

@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 	<%@include file="./loginCheck.jsp"%>
+	<script type="text/javascript" src="/js/common.js"></script>
 		<nav>
 			<div class="nav-div">
 				<h1 class="nav-div-h1">

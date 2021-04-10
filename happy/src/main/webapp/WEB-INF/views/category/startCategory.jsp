@@ -1,14 +1,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<html>
+<head>
 <%@include file="../header.jsp"%>
 <%
 	if (userId == null) {
 		response.sendRedirect("/user/login");
 	}
 %>
-<html>
-<head>
 <title>exambank</title>
 <link rel="stylesheet" type="text/css" href="/css/mainstyle1.css">
 <link rel="stylesheet" type="text/css" href="/css/userstyle.css">
@@ -22,41 +22,30 @@
 var userSeq
 var currentPage
 var questionInfoList
+var categorySeq
 
 $(function () {
 
     userSeq = '${userSeq}'
     currentPage = '${currentPage}'
 
-    var categorySeq = location.pathname.replace("/category/start/", "").replace("/", "");
+    categorySeq = location.pathname.replace("/category/start/", "").replace("/", "");
 
     if (categorySeq == "") {
         location.href = "/main"
 
     }
-    getQuestionList(userSeq, categorySeq)
 
-    function getQuestionList(authorSeq, categorySeq) {
+    getQuestionList()
+
+    function getQuestionList() {
 
         var data = {
             "categorySeq": categorySeq
         }
 
-        $.ajax({
-            url: "/question/info/list",
-            type: "GET",
-            dataType: 'json',
-            data: data,
-            success: function (result) {
-
-                questionInfoList = result.resultData
-                createHtml()
-
-            },
-            error: function (xhr, resp, text) {
-                console.log(xhr, resp, text);
-            }
-        })
+        questionInfoList = callGet("/question/info/list", data).resultData
+        createHtml()
     }
 });
 
@@ -136,7 +125,6 @@ function shuffleArray(array) {
     }
     return array;
 };
-
 
 </script>
 

@@ -1,17 +1,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@include file="../header.jsp"%>
-
 <html>
 <head>
+<%@include file="../header.jsp"%>
 <title>exambank</title>
 <link rel="stylesheet" type="text/css" href="/css/mainstyle1.css">
 <link rel="stylesheet" type="text/css" href="/css/userstyle.css">
 <link rel="stylesheet" type="text/css" href="/css/input.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
-<script type="text/javascript" src="/js/common.js"></script>
 
 <script>
 function login() {
@@ -34,31 +31,6 @@ function login() {
         $('#userPassword').val('')
 
     }
-
-    // $.ajax({
-    //     url: "login",
-    //     type: "POST",
-    //     dataType: 'json',
-    //     data: data,
-    //     success: function (result) {
-
-    //         if (result.resultFlag) {
-
-    //             location.href = "/main"
-
-    //         } else {
-
-    //             alert("아이디 또는 패스워드를 확인해주세요")
-    //             $('#userId').val('')
-    //             $('#userPassword').val('')
-
-    //         }
-
-    //     },
-    //     error: function (xhr, resp, text) {
-    //         console.log(xhr, resp, text);
-    //     }
-    // })
 }
 </script>
 </head>

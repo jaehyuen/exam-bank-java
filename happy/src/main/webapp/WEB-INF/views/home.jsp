@@ -1,9 +1,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@include file="loginCheck.jsp" %>
+
 <html>
 <head>
+<%@include file="loginCheck.jsp" %>
 <title>exambank</title>
 <link rel="stylesheet" type="text/css" href="/css/startstyle.css">
 </head>

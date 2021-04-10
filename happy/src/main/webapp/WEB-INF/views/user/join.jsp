@@ -1,89 +1,70 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@include file="../header.jsp"%>
-
 <html>
 <head>
+<%@include file="../header.jsp"%>
 <title>exambank</title>
 <link rel="stylesheet" type="text/css" href="/css/mainstyle1.css">
 <link rel="stylesheet" type="text/css" href="/css/userstyle.css">
 <link rel="stylesheet" type="text/css" href="/css/input.css">
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 <script>
-	function checkIdDuplicate() {
-		var userId = document.getElementById("userId")
-		var joinBtn = document.getElementById("joinButton")
-		var dupBtn = document.getElementById("dupButton")
+function checkIdDuplicate() {
+    var userId = document.getElementById("userId")
+    var joinBtn = document.getElementById("joinButton")
+    var dupBtn = document.getElementById("dupButton")
 
-		if ($('#userId').val() == "") {
-			alert("아이디가 빈칸입니다")
-			return
+    if ($('#userId').val() == "") {
+        alert("아이디가 빈칸입니다")
+        return
 
-			
 
-		}
-		var data = {
-			"userId" : $('#userId').val()
-		}
 
-		console.log(data);
+    }
+    var data = {
+        "userId": $('#userId').val()
+    }
 
-		$.ajax({
-			url : "check",
-			type : "POST",
-			dataType : 'json',
-			data : data,
-			success : function(result) {
+    var resultDto = callPost("/user/check", data)
+     
+    alert(resultDto.resultMessage)
+    
+    if (resultDto.resultFlag) {
 
-				alert(result.resultMessage)
+        $('#userId').prop('readonly', true);
 
-				if (result.resultFlag) {
+        $('#joinButton').show()
+        $('#dupButton').hide()
 
-					$('#userId').prop('readonly', true);
+    } else {
 
-					$('#joinButton').show()
-					$('#dupButton').hide()
+        $('#userId').val('')
 
-				} else {
+    }
 
-					$('#userId').val('')
+}
 
-				}
-			},
-			error : function(xhr, resp, text) {
-				console.log(xhr, resp, text);
-			}
-		})
+function join() {
 
-	}
+    var data = {
+        "userId": $('#userId').val(),
+        "userPassword": $('#userPassword').val(),
+        "userName": $('#userName').val()
+    }
 
-	function join() {
+    var resultDto = callPost("/user/join", data)
 
-		var data = {
-			"userId" : $('#userId').val(),
-			"userPassword" : $('#userPassword').val(),
-			"userName" : $('#userName').val()
-		}
+    if (resultDto.resultFlag) {
 
-		$.ajax({
-			url : "join",
-			type : "POST",
-			dataType : 'json',
-			data : data,
-			success : function(result) {
-				alert("가입 성공 로그인을 해주세요")
-				location.href = "/user/login"
+        alert("가입 성공 로그인을 해주세요")
+        location.href = "/user/login"
+    }
 
-			},
-			error : function(xhr, resp, text) {
-				console.log(xhr, resp, text);
-			}
-		})
-
-	}
+}
 </script>
 
 </head>

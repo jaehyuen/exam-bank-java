@@ -84,10 +84,10 @@ public class CategoryController {
 
 
 	@RequestMapping(value = "/category/create", method = RequestMethod.POST)
-	public @ResponseBody ResultDto createCategory(@ModelAttribute CategoryDto categoryDto) {
+	public @ResponseBody ResultDto createCategory(@RequestBody CategoryDto categoryDto) {
 		
 		logger.debug("[createCategory] start /category/create post");
-		logger.debug("[createCategory] categoryDto is : " + categoryDto);
+		logger.info("[createCategory] categoryDto is : " + categoryDto);
 		
 		return categoryService.createCategory(categoryDto);
 	}
