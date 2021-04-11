@@ -19,11 +19,11 @@
 <script type='text/javascript' src='/css/slide.js'></script>
 
 <script>
-
 var userSeq
 var currentPage
 var questionSeq
-var exampleSeqList=[];
+var categorySeq
+var exampleSeqList = [];
 
 
 $(function () {
@@ -31,112 +31,94 @@ $(function () {
     userSeq = '${userSeq}'
     currentPage = '${currentPage}'
 
-    	questionSeq = location.pathname.replace("/question/edit", "").replace("/", "");
+    questionSeq = location.pathname.replace("/question/edit", "").replace("/", "");
 
     if (questionSeq == "") {
         location.href = "/main"
 
     }
-    getQuestionInfo(questionSeq)
-    
-	$("input[name=questionType]").change(function() {
+    getQuestionInfo()
 
-		var radioValue = String($(this).val());
+    $("input[name=questionType]").change(function () {
 
-		if (radioValue == "true") {
+        var radioValue = String($(this).val());
 
-			$('.questionType1').prop('required', true);
-			$('.questionType2').prop('required', false);
+        if (radioValue == "true") {
 
-			$(".slide_div").show();
-			$(".slide_div2").hide();
+            $('.questionType1').prop('required', true);
+            $('.questionType2').prop('required', false);
 
-		} else if (radioValue == "false") {
+            $(".slide_div").show();
+            $(".slide_div2").hide();
 
-			$('.questionType1').prop('required', false);
-			$('.questionType2').prop('required', true);
-			$(".slide_div").hide();
-			$(".slide_div2").show();
-		}
+        } else if (radioValue == "false") {
 
-	});
+            $('.questionType1').prop('required', false);
+            $('.questionType2').prop('required', true);
+            $(".slide_div").hide();
+            $(".slide_div2").show();
+        }
+
+    });
 
 });
 
-function getQuestionInfo(questionSeq) {
+function getQuestionInfo() {
 
     var data = {
         "questionSeq": questionSeq
     }
 
-    $.ajax({
-        url: "/question/info",
-        type: "GET",
-        dataType: 'json',
-        data: data,
-        success: function (result) {
+    var resultDto = callGet("/question/info", data)
 
-            var question = result.resultData.question;
-            categorySeq = question.categorySeq;
-       
-            console.log(question)
+    var question = resultDto.resultData.question;
 
-            $('#questionTitle').val(question.questionTitle)
-            $('#questionAnswer1').val(question.questionAnswer)
-            $('#questionAnswer2').val(question.questionAnswer)
+    categorySeq = question.categorySeq;
 
-            if (question.questionType) {
+    console.log(question)
 
-                $('#questionType1').prop('checked', true);
-                $('#questionType2').prop('checked', false);
-                $('.questionType1').prop('required', true);
-    			$('.questionType2').prop('required', false);
-                $(".slide_div").show();
-                $(".slide_div2").hide();
-            } else {
-                $('#questionType1').prop('checked', false);
-                $('#questionType2').prop('checked', true);
-                $('.questionType1').prop('required', false);
-    			$('.questionType2').prop('required', true);
-                $(".slide_div").hide();
-                $(".slide_div2").show();
-            }
+    $('#questionTitle').val(question.questionTitle)
+    $('#questionAnswer1').val(question.questionAnswer)
+    $('#questionAnswer2').val(question.questionAnswer)
 
-            if (result.resultData.exampleList != undefined) {
-                $.each(result.resultData.exampleList, function (i, example) {
+    if (question.questionType) {
 
-                    var exId = '#example' + (i + 1)
-                    $(exId).val(example.example)
-                    exampleSeqList.push(example.exampleSeq)
+        $('#questionType1').prop('checked', true);
+        $('#questionType2').prop('checked', false);
+        $('.questionType1').prop('required', true);
+        $('.questionType2').prop('required', false);
+        $(".slide_div").show();
+        $(".slide_div2").hide();
+    } else {
+        $('#questionType1').prop('checked', false);
+        $('#questionType2').prop('checked', true);
+        $('.questionType1').prop('required', false);
+        $('.questionType2').prop('required', true);
+        $(".slide_div").hide();
+        $(".slide_div2").show();
+    }
 
-                });
+    if (resultDto.resultData.exampleList != undefined) {
+        $.each(resultDto.resultData.exampleList, function (i, example) {
 
-            }
-            var data2 = {
-                "categorySeq": question.categorySeq
+            var exId = '#example' + (i + 1)
+            $(exId).val(example.example)
+            exampleSeqList.push(example.exampleSeq)
 
-            }
+        });
 
-            $.ajax({
-                url: "/category/info",
-                type: "GET",
-                dataType: 'json',
-                data: data2,
-                success: function (result2) {
-                    console.log(result2.resultData)
-                    $('#categoryId').val(result2.resultData.categoryName)
-                    $('#categoryId').prop('name', result.resultData.categorySeq)
+    }
+    var data2 = {
+        "categorySeq": question.categorySeq
 
-                },
-                error: function (xhr, resp, text) {
-                    console.log(xhr, resp, text);
-                }
-            })
-        },
-        error: function (xhr, resp, text) {
-            console.log(xhr, resp, text);
-        }
-    })
+    }
+
+    var resultDto2 = callGet("/category/info", data2)
+
+    console.log(resultDto2.resultData)
+    $('#categoryId').val(resultDto2.resultData.categoryName)
+    $('#categoryId').prop('name', resultDto2.resultData.categorySeq)
+
 }
 
 function editQuestion() {
@@ -148,7 +130,7 @@ function editQuestion() {
         '#questionAnswer1').val() : $('#questionAnswer2').val()
 
     var questionData = {
-        		"questionSeq":questionSeq,
+        "questionSeq": questionSeq,
         "questionTitle": $('#questionTitle').val(),
         "questionType": questionType,
         "questionAnswer": questionAnswer,
@@ -167,7 +149,7 @@ function editQuestion() {
 
             exampleList.push({
                 example: $(exId).val(),
-                exampleSeq: exampleSeqList[i-1] 
+                exampleSeq: exampleSeqList[i - 1]
             })
         }
     }
@@ -178,27 +160,14 @@ function editQuestion() {
     }
 
     console.log(data + "수정 시작")
-    
-        $.ajax({
-            url: "/question/edit",
-            type: "POST",
-            contentType: 'application/json',
-            dataType: 'json',
-            data: JSON.stringify(data),
-            success: function (result) {
-    
-                alert(result.resultMessage)
-    
-               // if (result.resultFlag) {
-               //     location.href = "/main/" + categorySeq
-               // }
-            },
-            error: function (xhr, resp, text) {
-                console.log(xhr, resp, text);
-            }
-        })
-        
 
+    var resultDto = callPost("/question/edit", data)
+
+    alert(resultDto.resultMessage)
+
+    if (resultDto.resultFlag) {
+        location.href = "/main/" + categorySeq
+    }
 }
 </script>
 

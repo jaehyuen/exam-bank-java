@@ -9,7 +9,7 @@
 		            (EXAMPLE,
 		             QUESTION_SEQ)
 		VALUES      ( #{example},
-		              #{questionSeq} 
+		              #{questionSeq} )
 	</insert>
 
 	<select id="selectExampleList" parameterType="int" resultType="exampleDto">

@@ -21,63 +21,54 @@ if (userId == null) {
 <script>
 var userSeq
 var currentPage
+var questionSeq
+
 $(function () {
 
     userSeq = '${userSeq}'
     currentPage = '${currentPage}'
 
-    var categorySeq = location.pathname.replace("/question", "").replace("/", "");
+    questionSeq = location.pathname.replace("/question", "").replace("/", "");
 
-    if (categorySeq == "") {
+    if (questionSeq == "") {
         location.href = "/main"
 
     }
-    getQuestionInfo(userSeq, categorySeq)
+    getQuestionInfo()
 
 
 });
 
-function getQuestionInfo(authorSeq, questionSeq) {
+function getQuestionInfo() {
 
     var data = {
         "questionSeq": questionSeq
     }
 
-    $.ajax({
-        url: "/question/info",
-        type: "GET",
-        dataType: 'json',
-        data: data,
-        success: function (result) {
+    var resultDto = callGet("/question/info", data)
 
-            var question = result.resultData.question;
-            console.log(question)
-            var str = ""
-            str += "<h1 class='main-div-h1' id='main-div-h1'>" + question.questionTitle + "</h1>"
+    var question = resultDto.resultData.question;
+    console.log(question)
+    var str = ""
+    str += "<h1 class='main-div-h1' id='main-div-h1'>" + question.questionTitle + "</h1>"
 
-            str += createHtml("정답", question.questionAnswer)
+    str += createHtml("정답", question.questionAnswer)
 
-            if (result.resultData.exampleList != undefined) {
-                $.each(result.resultData.exampleList, function (i, example) {
-                    str += createHtml("객관식 보기 " + (i+1), example.example)
-                });
+    if (resultDto.resultData.exampleList != undefined) {
+        $.each(resultDto.resultData.exampleList, function (i, example) {
+            str += createHtml("객관식 보기 " + (i + 1), example.example)
+        });
 
-            }
+    }
 
 
-            if (userSeq == question.authorSeq) {
-                str += "<div class='main-div-input-answer-flex'>"
-                str += "<a href='/question/edit/" + question.questionSeq + "' class='main-div-answer3'>수정 </a>"
-                str += "</div>"
-            }
-            
-            $("#main-div").prepend(str)
+    if (userSeq == question.authorSeq) {
+        str += "<div class='main-div-input-answer-flex'>"
+        str += "<a href='/question/edit/" + question.questionSeq + "' class='main-div-answer3'>수정 </a>"
+        str += "</div>"
+    }
 
-        },
-        error: function (xhr, resp, text) {
-            console.log(xhr, resp, text);
-        }
-    })
+    $("#main-div").prepend(str)
 }
 
 function createHtml(a, b) {

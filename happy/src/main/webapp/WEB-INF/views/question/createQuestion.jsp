@@ -19,129 +19,139 @@
 <script type='text/javascript' src='/css/slide.js'></script>
 
 <script>
+var userSeq
+var currentPage
+var categorySeq
 
-	$(function() {
+$(function () {
 
-		var userSeq = '${userSeq}'
-		var currentPage = '${currentPage}'
+    userSeq = '${userSeq}'
+    currentPage = '${currentPage}'
+    categorySeq = location.pathname.replace("/question/create", "").replace("/", "");
 
-		getCategory(userSeq, currentPage)
+    getCategory()
 
-		$(".slide_div2").hide();
-		$("input[name=questionType]").change(function() {
+    $(".slide_div2").hide();
+    $("input[name=questionType]").change(function () {
 
-			var radioValue = String($(this).val());
+        var radioValue = String($(this).val());
 
-			if (radioValue == "true") {
+        if (radioValue == "true") {
 
-				$('.questionType1').prop('required', true);
-				$('.questionType2').prop('required', false);
+            $('.questionType1').prop('required', true);
+            $('.questionType2').prop('required', false);
 
-				$(".slide_div").show();
-				$(".slide_div2").hide();
+            $(".slide_div").show();
+            $(".slide_div2").hide();
 
-			} else if (radioValue == "false") {
+        } else if (radioValue == "false") {
 
-				$('.questionType1').prop('required', false);
-				$('.questionType2').prop('required', true);
-				$(".slide_div").hide();
-				$(".slide_div2").show();
-			}
+            $('.questionType1').prop('required', false);
+            $('.questionType2').prop('required', true);
+            $(".slide_div").hide();
+            $(".slide_div2").show();
+        }
 
-		});
+    });
 
-	});
+});
 
-	function getCategory(authorSeq, currentPage) {
+function getCategory() {
 
-		var categorySeq = location.pathname.replace("/question/create", "")
-				.replace("/", "");
+    var data = {
+        "categorySeq": categorySeq
 
-		var data = {
-			"categorySeq" : categorySeq
+    }
 
-		}
+    var resultDto = callGet("/category/info", data)
 
-		$.ajax({
-			url : "/category/info",
-			type : "GET",
-			dataType : 'json',
-			data : data,
-			success : function(result) {
+    console.log(resultDto)
+    $('#categoryId').val(resultDto.resultData.categoryName)
+    $('#categoryId').prop('name', resultDto.resultData.categorySeq)
 
-				console.log(result)
-				$('#categoryId').val(result.resultData.categoryName)
-				$('#categoryId').prop('name', result.resultData.categorySeq)
+    // $.ajax({
+    //     url: "/category/info",
+    //     type: "GET",
+    //     dataType: 'json',
+    //     data: data,
+    //     success: function (result) {
 
-			},
-			error : function(xhr, resp, text) {
-				console.log(xhr, resp, text);
-			}
-		})
-	}
+    //         console.log(result)
+    //         $('#categoryId').val(result.resultData.categoryName)
+    //         $('#categoryId').prop('name', result.resultData.categorySeq)
 
-	function createQuestion() {
+    //     },
+    //     error: function (xhr, resp, text) {
+    //         console.log(xhr, resp, text);
+    //     }
+    // })
+}
 
-		var categorySeq = location.pathname.replace("/question/create", "")
-				.replace("/", "");
-		var questionType = $(':radio[name="questionType"]:checked').val();
-		var userSeq = '${userSeq}'
+function createQuestion() {
 
-		var questionAnswer = String(questionType) == "true" ? $(
-				'#questionAnswer1').val() : $('#questionAnswer2').val()
+    var questionType = $(':radio[name="questionType"]:checked').val();
 
-		var questionData = {
-			"questionTitle" : $('#questionTitle').val(),
-			"questionType" : questionType,
-			"questionAnswer" : questionAnswer,
-			"categorySeq" : parseInt(categorySeq),
-			"authorSeq" : parseInt(userSeq)
+    var questionAnswer = String(questionType) == "true" ? $('#questionAnswer1').val() : $('#questionAnswer2').val()
 
-		}
+    var questionData = {
+        "questionTitle": $('#questionTitle').val(),
+        "questionType": questionType,
+        "questionAnswer": questionAnswer,
+        "categorySeq": parseInt(categorySeq),
+        "authorSeq": parseInt(userSeq)
 
-		var exampleList = new Array();
+    }
 
-		if (String(questionType) == "true") {
-		
-			for (i = 1; i < 4; i++) {
+    var exampleList = new Array();
 
-				var exId = '#example' + i
-			
-				exampleList.push({
-					example : $(exId).val()
-				})
-			}
-		}
+    if (String(questionType) == "true") {
 
-		var data = {
-			"question" : questionData,
-			"exampleList" : exampleList
-		}
+        for (i = 1; i < 4; i++) {
 
-		console.log(data)
+            var exId = '#example' + i
 
-		$.ajax({
-			url : "/question/create",
-			type : "POST",
-			contentType: 'application/json',
-			dataType : 'json',
-			data : JSON.stringify(data),
-			success : function(result) {
+            exampleList.push({
+                example: $(exId).val()
+            })
+        }
+    }
 
-				alert(result.resultMessage)
+    var data = {
+        "question": questionData,
+        "exampleList": exampleList
+    }
 
-				if (result.resultFlag) {
-					location.href = "/main/"+categorySeq
+    console.log(data)
 
-				} 
+    var resultDto = callPost("/question/create", data)
 
-			},
-			error : function(xhr, resp, text) {
-				console.log(xhr, resp, text);
-			}
-		})
+    alert(resultDto.resultMessage)
 
-	}
+    if (resultDto.resultFlag) {
+        location.href = "/main/" + categorySeq
+
+    }
+    // $.ajax({
+    //     url: "/question/create",
+    //     type: "POST",
+    //     contentType: 'application/json',
+    //     dataType: 'json',
+    //     data: JSON.stringify(data),
+    //     success: function (result) {
+
+    //         alert(result.resultMessage)
+
+    //         if (result.resultFlag) {
+    //             location.href = "/main/" + categorySeq
+
+    //         }
+
+    //     },
+    //     error: function (xhr, resp, text) {
+    //         console.log(xhr, resp, text);
+    //     }
+    // })
+}
 </script>
 
 </head>
